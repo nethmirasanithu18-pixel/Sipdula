@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SIPDULA - Education</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#020308;
+    color:white;
+    font-family:Arial, Helvetica, sans-serif;
+    overflow-x:hidden;
+}
+
+/* ================= BACKGROUND ================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+
+    background:
+    radial-gradient(
+        circle at 50% 10%,
+        #123d68 0%,
+        transparent 35%
+    ),
+    radial-gradient(
+        circle at 20% 80%,
+        #071d35 0%,
+        transparent 30%
+    ),
+    #020308;
+}
+
+#particles{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+}
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:#55baff;
+    border-radius:50%;
+    box-shadow:0 0 12px #55baff;
+
+    animation:float linear infinite;
+}
+
+@keyframes float{
+
+    from{
+        transform:translateY(105vh);
+        opacity:0;
+    }
+
+    20%{
+        opacity:1;
+    }
+
+    80%{
+        opacity:1;
+    }
+
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+
+}
+
+/* ================= NAVBAR ================= */
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+
+    width:100%;
+    height:70px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 7%;
+
+    background:rgba(0,0,0,.5);
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid rgba(255,255,255,.1);
+
+    z-index:100;
+}
+
+.logo{
+    font-size:23px;
+    font-weight:900;
+    letter-spacing:5px;
+
+    text-shadow:0 0 20px #278edb;
+}
+
+nav a{
+    color:#aaa;
+    text-decoration:none;
+
+    margin-left:30px;
+
+    font-size:13px;
+    letter-spacing:2px;
+
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#55baff;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    position:relative;
+}
+
+.heroContent{
+    animation:heroIn 1.5s ease-out;
+}
+
+@keyframes heroIn{
+
+    from{
+        opacity:0;
+        transform:scale(.5);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+.subtitle{
+    color:#55baff;
+
+    font-size:14px;
+    letter-spacing:9px;
+
+    margin-bottom:25px;
+}
+
+.sipdula{
+    font-size:clamp(70px,16vw,220px);
+
+    font-weight:900;
+    letter-spacing:15px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #fff,
+        #55baff,
+        #fff
+    );
+
+    background-size:200% auto;
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+
+    animation:shine 4s linear infinite;
+
+    text-shadow:
+    0 0 50px rgba(50,160,255,.35);
+}
+
+@keyframes shine{
+
+    to{
+        background-position:200% center;
+    }
+
+}
+
+.scroll{
+    position:absolute;
+    bottom:35px;
+
+    font-size:12px;
+    letter-spacing:5px;
+
+    color:#aaa;
+
+    animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+
+    50%{
+        transform:translateY(10px);
+    }
+
+}
+
+/* ================= GRADE SECTION ================= */
+
+.grade-section{
+
+    min-height:100vh;
+
+    padding:120px 7%;
+
+    text-align:center;
+}
+
+.title{
+    font-size:clamp(40px,6vw,75px);
+    font-weight:900;
+
+    margin-bottom:15px;
+}
+
+.title span{
+    color:#55baff;
+}
+
+.description{
+    color:#888;
+
+    letter-spacing:2px;
+
+    margin-bottom:60px;
+}
+
+/* ================= GRADE GRID ================= */
+
+.grade-grid{
+
+    max-width:1100px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(170px,1fr));
+
+    gap:25px;
+}
+
+.grade-card{
+
+    height:190px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,.08),
+        rgba(255,255,255,.02)
+    );
+
+    border:
+    1px solid rgba(255,255,255,.12);
+
+    border-radius:25px;
+
+    backdrop-filter:blur(15px);
+
+    transition:.4s;
+}
+
+.grade-card:hover{
+
+    transform:
+    translateY(-12px)
+    scale(1.03);
+
+    border-color:#55baff;
+
+    box-shadow:
+    0 0 35px
+    rgba(50,160,255,.25);
+}
+
+.grade-number{
+
+    font-size:55px;
+
+    font-weight:900;
+
+    color:#55baff;
+
+    text-shadow:
+    0 0 25px
+    rgba(80,180,255,.5);
+}
+
+.grade-card p{
+
+    margin-top:10px;
+
+    color:#aaa;
+
+    letter-spacing:2px;
+}
+
+/* ================= SUBJECT AREA ================= */
+
+.subject-area{
+
+    display:none;
+
+    max-width:1100px;
+
+    margin:70px auto 0;
+
+    animation:appear .6s ease;
+}
+
+.subject-area.active{
+    display:block;
+}
+
+@keyframes appear{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.selected-grade{
+
+    color:#55baff;
+
+    letter-spacing:5px;
+
+    margin-bottom:30px;
+}
+
+.subject-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+
+    gap:20px;
+}
+
+.subject-card{
+
+    padding:30px 20px;
+
+    cursor:pointer;
+
+    border-radius:20px;
+
+    background:
+    rgba(255,255,255,.05);
+
+    border:
+    1px solid rgba(255,255,255,.1);
+
+    transition:.35s;
+}
+
+.subject-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#55baff;
+
+    background:
+    rgba(40,130,210,.12);
+}
+
+.subject-icon{
+
+    font-size:45px;
+
+    margin-bottom:15px;
+}
+
+.subject-card h3{
+
+    font-size:20px;
+
+}
+
+/* ================= TEACHER LIST ================= */
+
+.teacher-list{
+
+    display:none;
+
+    margin-top:50px;
+
+    animation:appear .6s ease;
+}
+
+.teacher-list.active{
+    display:block;
+}
+
+.teacher-list h2{
+
+    font-size:35px;
+
+    margin-bottom:25px;
+}
+
+.teacher-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+
+    gap:20px;
+}
+
+.teacher-button{
+
+    padding:25px;
+
+    border-radius:18px;
+
+    background:
+    rgba(255,255,255,.05);
+
+    border:
+    1px solid rgba(255,255,255,.1);
+
+    color:white;
+
+    cursor:pointer;
+
+    text-align:left;
+
+    transition:.3s;
+}
+
+.teacher-button:hover{
+
+    border-color:#55baff;
+
+    transform:translateX(8px);
+
+    background:
+    rgba(40,130,210,.12);
+}
+
+.teacher-button .teacher-icon{
+
+    font-size:30px;
+
+    margin-bottom:12px;
+}
+
+.teacher-button h3{
+
+    font-size:20px;
+
+}
+
+.teacher-button p{
+
+    color:#777;
+
+    margin-top:5px;
+}
+
+/* ================= TEACHER DETAILS ================= */
+
+.teacher-details{
+
+    display:none;
+
+    max-width:800px;
+
+    margin:60px auto 0;
+
+    padding:50px;
+
+    border-radius:30px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(35,120,190,.18),
+        rgba(255,255,255,.04)
+    );
+
+    border:
+    1px solid rgba(85,186,255,.4);
+
+    box-shadow:
+    0 0 50px
+    rgba(40,150,230,.12);
+
+    animation:appear .6s ease;
+
+    text-align:center;
+}
+
+.teacher-details.active{
+    display:block;
+}
+
+.big-icon{
+
+    font-size:70px;
+
+    margin-bottom:20px;
+}
+
+.detail-subject{
+
+    color:#55baff;
+
+    font-size:13px;
+
+    letter-spacing:5px;
+
+    margin-bottom:15px;
+}
+
+.teacher-name{
+
+    font-size:clamp(32px,5vw,55px);
+
+    font-weight:900;
+
+    margin-bottom:40px;
+}
+
+.detail-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+}
+
+.detail-box{
+
+    padding:25px;
+
+    border-radius:18px;
+
+    background:
+    rgba(0,0,0,.3);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+}
+
+.detail-box .icon{
+
+    font-size:30px;
+
+    margin-bottom:12px;
+}
+
+.detail-box h4{
+
+    color:#55baff;
+
+    margin-bottom:8px;
+}
+
+.detail-box p{
+
+    color:#bbb;
+
+}
+
+.close{
+
+    margin-top:30px;
+
+    padding:12px 30px;
+
+    background:transparent;
+
+    color:white;
+
+    border:1px solid #55baff;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.close:hover{
+
+    background:#55baff;
+
+    color:#000;
+}
+
+/* ================= FINAL ================= */
+
+.final{
+
+    min-height:80vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:80px 20px;
+}
+
+.final h2{
+
+    font-size:
+    clamp(40px,7vw,90px);
+
+    line-height:1.1;
+}
+
+.final span{
+
+    color:#55baff;
+
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+
+    padding:50px;
+
+    text-align:center;
+
+    border-top:
+    1px solid rgba(255,255,255,.08);
+}
+
+footer h3{
+
+    letter-spacing:7px;
+}
+
+footer p{
+
+    color:#666;
+
+    margin-top:12px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:650px){
+
+    nav{
+        padding:0 20px;
+    }
+
+    nav div:last-child{
+        display:none;
+    }
+
+    .sipdula{
+        letter-spacing:6px;
+    }
+
+    .detail-grid{
+        grid-template-columns:1fr;
+    }
+
+    .teacher-details{
+        padding:30px 20px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- PARTICLES -->
+
+<div id="particles"></div>
+
+
+<!-- NAVIGATION -->
+
+<nav>
+
+    <div class="logo">
+        SIPDULA
+    </div>
+
+    <div>
+
+        <a href="#home">
+            HOME
+        </a>
+
+        <a href="#grades">
+            GRADES
+        </a>
+
+        <a href="#future">
+            FUTURE
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="heroContent">
+
+        <div class="subtitle">
+            KNOWLEDGE • FUTURE • SUCCESS
+        </div>
+
+        <h1 class="sipdula">
+            SIPDULA
+        </h1>
+
+    </div>
+
+    <div class="scroll">
+        SCROLL DOWN ↓
+    </div>
+
+</section>
+
+
+<!-- ================= GRADES ================= -->
+
+<section class="grade-section" id="grades">
+
+    <h2 class="title">
+        SELECT YOUR <span>GRADE</span>
+    </h2>
+
+    <p class="description">
+        CHOOSE YOUR GRADE TO FIND YOUR SUBJECTS AND TEACHERS
+    </p>
+
+
+    <div class="grade-grid">
+
+        <div class="grade-card"
+             onclick="selectGrade(6)">
+
+            <div class="grade-number">
+                06
+            </div>
+
+            <p>
+                GRADE 6
+            </p>
+
+        </div>
+
+
+        <div class="grade-card"
+             onclick="selectGrade(7)">
+
+            <div class="grade-number">
+                07
+            </div>
+
+            <p>
+                GRADE 7
+            </p>
+
+        </div>
+
+
+        <div class="grade-card"
+             onclick="selectGrade(8)">
+
+            <div class="grade-number">
+                08
+            </div>
+
+            <p>
+                GRADE 8
+            </p>
+
+        </div>
+
+
+        <div class="grade-card"
+             onclick="selectGrade(9)">
+
+            <div class="grade-number">
+                09
+            </div>
+
+            <p>
+                GRADE 9
+            </p>
+
+        </div>
+
+
+        <div class="grade-card"
+             onclick="selectGrade(10)">
+
+            <div class="grade-number">
+                10
+            </div>
+
+            <p>
+                GRADE 10
+            </p>
+
+        </div>
+
+
+        <div class="grade-card"
+             onclick="selectGrade(11)">
+
+            <div class="grade-number">
+                11
+            </div>
+
+            <p>
+                GRADE 11
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SUBJECTS ================= -->
+
+    <div class="subject-area"
+         id="subjectArea">
+
+        <div class="selected-grade"
+             id="selectedGrade">
+
+            GRADE 6
+
+        </div>
+
+
+        <div class="subject-grid">
+
+
+            <div class="subject-card"
+                 onclick="showTeachers('Science','🧪')">
+
+                <div class="subject-icon">
+                    🧪
+                </div>
+
+                <h3>
+                    Science
+                </h3>
+
+            </div>
+
+
+            <div class="subject-card"
+                 onclick="showTeachers('Mathematics','📐')">
+
+                <div class="subject-icon">
+                    📐
+                </div>
+
+                <h3>
+                    Mathematics
+                </h3>
+
+            </div>
+
+
+            <div class="subject-card"
+                 onclick="showTeachers('English','📖')">
+
+                <div class="subject-icon">
+                    📖
+                </div>
+
+                <h3>
+                    English
+                </h3>
+
+            </div>
+
+
+            <div class="subject-card"
+                 onclick="showTeachers('Sinhala','📚')">
+
+                <div class="subject-icon">
+                    📚
+                </div>
+
+                <h3>
+                    Sinhala
+                </h3>
+
+            </div>
+
+
+            <div class="subject-card"
+                 onclick="showTeachers('Tamil','🔤')">
+
+                <div class="subject-icon">
+                    🔤
+                </div>
+
+                <h3>
+                    Tamil
+                </h3>
+
+            </div>
+
+
+            <div class="subject-card"
+                 onclick="showTeachers('History','🏛️')">
+
+                <div class="subject-icon">
+                    🏛️
+                </div>
+
+                <h3>
+                    History
+                </h3>
+
+            </div>
+
+
+            <div class="subject-card"
+                 onclick="showTeachers('ICT','💻')">
+
+                <div class="subject-icon">
+                    💻
+                </div>
+
+                <h3>
+                    ICT
+                </h3>
+
+            </div>
+
+
+            <div class="subject-card"
+                 onclick="showTeachers('Religion','📘')">
+
+                <div class="subject-icon">
+                    📘
+                </div>
+
+                <h3>
+                    Religion
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= TEACHER LIST ================= -->
+
+        <div class="teacher-list"
+             id="teacherList">
+
+            <h2>
+                Teachers
+            </h2>
+
+            <div class="teacher-grid"
+                 id="teacherGrid">
+            </div>
+
+        </div>
+
+
+        <!-- ================= TEACHER DETAILS ================= -->
+
+        <div class="teacher-details"
+             id="teacherDetails">
+
+            <div class="big-icon"
+                 id="bigIcon">
+                🧪
+            </div>
+
+            <div class="detail-subject"
+                 id="detailSubject">
+                SCIENCE
+            </div>
+
+            <div class="teacher-name"
+                 id="detailName">
+                Teacher Name
+            </div>
+
+
+            <div class="detail-grid">
+
+
+                <div class="detail-box">
+
+                    <div class="icon">
+                        🎓
+                    </div>
+
+                    <h4>
+                        Classes
+                    </h4>
+
+                    <p id="detailClasses">
+                        Coming Soon...
+                    </p>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="icon">
+                        ⏰
+                    </div>
+
+                    <h4>
+                        Class Time
+                    </h4>
+
+                    <p id="detailTime">
+                        Coming Soon...
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <button class="close"
+                    onclick="closeDetails()">
+
+                CLOSE ×
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FINAL ================= -->
+
+<section class="final"
+         id="future">
+
+    <h2>
+
+        EDUCATION IS THE<br>
+
+        <span>
+            BEST INVESTMENT
+        </span>
+
+        <br>
+
+        IN THE WORLD.
+
+    </h2>
+
+</section>
+
+
+<footer>
+
+    <h3>
+        SIPDULA
+    </h3>
+
+    <p>
+        Learn • Grow • Achieve
+    </p>
+
+</footer>
+
+
+<script>
+
+/* ================= PARTICLES ================= */
+
+const particles =
+document.getElementById("particles");
+
+for(let i=0;i<100;i++){
+
+    const p =
+    document.createElement("div");
+
+    p.className="particle";
+
+    p.style.left =
+    Math.random()*100+"%";
+
+    p.style.animationDuration =
+    (5+Math.random()*10)+"s";
+
+    p.style.animationDelay =
+    Math.random()*10+"s";
+
+    particles.appendChild(p);
+
+}
+
+
+/* ================= DATA ================= */
+
+/*
+   ADD MORE TEACHERS HERE LATER.
+
+   Format:
+
+   {
+       name:"Teacher Name",
+       classes:"Grade 6, Grade 7",
+       time:"Saturday 3:00 PM",
+       icon:"🧪"
+   }
+*/
+
+const teachers = {
+
+    Science: [
+
+        {
+            name:"Amila Nandasena",
+            classes:"Coming Soon...",
+            time:"Coming Soon...",
+            icon:"🧪"
+        }
+
+    ],
+
+
+    English: [
+
+        {
+            name:"Pranath Nallaperuma",
+            classes:"Coming Soon...",
+            time:"Coming Soon...",
+            icon:"📖"
+        }
+
+    ],
+
+
+    Mathematics: [
+
+        {
+            name:"Movin Rajapaksha",
+            classes:"Coming Soon...",
+            time:"Coming Soon...",
+            icon:"📐"
+        }
+
+    ],
+
+
+    Sinhala: [
+
+        {
+            name:"C.G. Liyanage",
+            classes:"Coming Soon...",
+            time:"Coming Soon...",
+            icon:"📚"
+        }
+
+    ],
+
+
+    Tamil: [
+
+        {
+            name:"Nirmalini Abey...",
+            classes:"Coming Soon...",
+            time:"Coming Soon...",
+            icon:"🔤"
+        }
+
+    ],
+
+
+    History: [
+
+        {
+            name:"Teacher details coming soon",
+            classes:"Coming Soon...",
+            time:"Coming Soon...",
+            icon:"🏛️"
+        }
+
+    ],
+
+
+    ICT: [
+
+        {
+            name:"Teacher details coming soon",
+            classes:"Coming Soon...",
+            time:"Coming Soon...",
+            icon:"💻"
+        }
+
+    ],
+
+
+    Religion: [
+
+        {
+            name:"Teacher details coming soon",
+            classes:"Coming Soon...",
+            time:"Coming Soon...",
+            icon:"📘"
+        }
+
+    ]
+
+};
+
+
+/* ================= GRADE ================= */
+
+let currentGrade = 6;
+
+function selectGrade(grade){
+
+    currentGrade = grade;
+
+    document.getElementById(
+        "selectedGrade"
+    ).innerText =
+    "GRADE " + grade;
+
+    document.getElementById(
+        "subjectArea"
+    ).classList.add("active");
+
+    document.getElementById(
+        "teacherList"
+    ).classList.remove("active");
+
+    document.getElementById(
+        "teacherDetails"
+    ).classList.remove("active");
+
+    document.getElementById(
+        "subjectArea"
+    ).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+/* ================= SHOW TEACHERS ================= */
+
+function showTeachers(subject,icon){
+
+    const list =
+    document.getElementById(
+        "teacherList"
+    );
+
+    const grid =
+    document.getElementById(
+        "teacherGrid"
+    );
+
+    grid.innerHTML="";
+
+
+    const subjectTeachers =
+    teachers[subject] || [];
+
+
+    subjectTeachers.forEach(
+        (teacher,index)=>{
+
+            const button =
+            document.createElement("div");
+
+            button.className=
+            "teacher-button";
+
+
+            button.innerHTML=`
+
+                <div class="teacher-icon">
+                    ${teacher.icon || icon}
+                </div>
+
+                <h3>
+                    ${teacher.name}
+                </h3>
+
+                <p>
+                    ${subject} Teacher
+                </p>
+
+            `;
+
+
+            button.onclick=function(){
+
+                showDetails(
+                    subject,
+                    teacher
+                );
+
+            };
+
+
+            grid.appendChild(button);
+
+        }
+    );
+
+
+    list.classList.add("active");
+
+    document.getElementById(
+        "teacherDetails"
+    ).classList.remove("active");
+
+
+    list.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
+}
+
+
+/* ================= DETAILS ================= */
+
+function showDetails(subject,teacher){
+
+    document.getElementById(
+        "bigIcon"
+    ).innerText =
+    teacher.icon;
+
+
+    document.getElementById(
+        "detailSubject"
+    ).innerText =
+    subject.toUpperCase();
+
+
+    document.getElementById(
+        "detailName"
+    ).innerText =
+    teacher.name;
+
+
+    document.getElementById(
+        "detailClasses"
+    ).innerText =
+    teacher.classes;
+
+
+    document.getElementById(
+        "detailTime"
+    ).innerText =
+    teacher.time;
+
+
+    document.getElementById(
+        "teacherDetails"
+    ).classList.add("active");
+
+
+    document.getElementById(
+        "teacherDetails"
+    ).scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
+}
+
+
+/* ================= CLOSE ================= */
+
+function closeDetails(){
+
+    document.getElementById(
+        "teacherDetails"
+    ).classList.remove("active");
+
+}
+
+</script>
+
+</body>
+</html>
