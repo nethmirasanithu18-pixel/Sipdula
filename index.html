@@ -10,10 +10,11 @@
 content="SIPDULA - Education is the best investment in the world.">
 
 <style>
+
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
 
 html{
@@ -23,117 +24,164 @@ html{
 body{
     font-family:Arial,Helvetica,sans-serif;
     background:#05070b;
-    color:white;
+    color:#fff;
     overflow-x:hidden;
 }
 
-body:before{
+/* BACKGROUND */
+
+body::before{
     content:"";
     position:fixed;
     inset:0;
     z-index:-2;
+
     background:
-    radial-gradient(circle at 20% 20%,rgba(0,150,255,.13),transparent 30%),
-    radial-gradient(circle at 80% 70%,rgba(0,220,255,.08),transparent 30%),
+    radial-gradient(
+        circle at 15% 20%,
+        rgba(0,180,255,.16),
+        transparent 30%
+    ),
+    radial-gradient(
+        circle at 85% 70%,
+        rgba(0,120,255,.10),
+        transparent 30%
+    ),
     #05070b;
 }
 
-body:after{
+body::after{
     content:"";
     position:fixed;
     inset:0;
     z-index:-1;
-    pointer-events:none;
+
     background-image:
-    linear-gradient(rgba(0,180,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,180,255,.035) 1px,transparent 1px);
+    linear-gradient(
+        rgba(0,180,255,.035) 1px,
+        transparent 1px
+    ),
+    linear-gradient(
+        90deg,
+        rgba(0,180,255,.035) 1px,
+        transparent 1px
+    );
+
     background-size:45px 45px;
+    pointer-events:none;
 }
 
-/* NAVIGATION */
+/* NAV */
 
 nav{
     position:fixed;
     top:0;
     left:0;
     right:0;
-    z-index:100;
-    padding:18px 7%;
+
+    height:70px;
+
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    background:rgba(5,7,11,.82);
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid rgba(69,202,255,.15);
+    justify-content:space-between;
+
+    padding:0 7%;
+
+    background:rgba(3,7,12,.82);
+    backdrop-filter:blur(15px);
+
+    border-bottom:1px solid rgba(70,200,255,.15);
+
+    z-index:1000;
 }
 
 .logo{
-    font-size:22px;
+    font-size:23px;
     font-weight:900;
     letter-spacing:5px;
-    color:#45caff;
+    color:#48caff;
 }
 
 nav a{
-    color:#cfefff;
+    color:#c9e9f8;
     text-decoration:none;
-    margin-left:24px;
+    margin-left:28px;
     font-size:14px;
+    transition:.2s;
 }
 
 nav a:hover{
-    color:#45caff;
+    color:#48caff;
 }
 
 /* HERO */
 
 .hero{
     min-height:100vh;
+
     display:flex;
     flex-direction:column;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
+
     text-align:center;
+
     padding:100px 20px 50px;
 }
 
 .hero h1{
     font-size:clamp(70px,17vw,220px);
+
+    font-weight:900;
+
     letter-spacing:.08em;
+
+    color:#fff;
+
     text-shadow:
-    0 0 18px rgba(0,190,255,.5),
-    0 0 70px rgba(0,190,255,.25);
-    animation:pulse 3s ease-in-out infinite;
+    0 0 20px rgba(0,200,255,.6),
+    0 0 80px rgba(0,180,255,.25);
+
+    animation:glow 3s ease-in-out infinite;
 }
 
 .hero p{
-    margin-top:20px;
-    color:#8fdcff;
-    letter-spacing:4px;
+    margin-top:15px;
+
+    color:#70d8ff;
+
     font-size:14px;
+
+    letter-spacing:5px;
 }
 
 .scroll{
-    margin-top:80px;
-    color:#6b91a8;
+    margin-top:75px;
+
+    color:#718a99;
+
     font-size:12px;
+
     letter-spacing:3px;
 }
 
-@keyframes pulse{
+@keyframes glow{
+
     50%{
         text-shadow:
-        0 0 30px rgba(0,190,255,.8),
-        0 0 100px rgba(0,190,255,.35);
+        0 0 35px rgba(0,200,255,.9),
+        0 0 100px rgba(0,180,255,.35);
     }
+
 }
 
-/* SECTIONS */
+/* SECTION */
 
 section{
-    padding:90px 7%;
     max-width:1250px;
     margin:auto;
+
+    padding:90px 7%;
 }
 
 .section-title{
@@ -146,75 +194,94 @@ section{
 }
 
 .section-title p{
-    color:#7895a5;
     margin-top:10px;
+    color:#7894a3;
 }
 
 /* QUOTE */
 
 .quote{
     min-height:55vh;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     text-align:center;
 }
 
 .quote h2{
-    font-size:clamp(32px,6vw,75px);
     max-width:1000px;
-    line-height:1.08;
+
+    font-size:clamp(35px,6vw,75px);
+
+    line-height:1.1;
 }
 
 .quote span{
-    color:#45caff;
+    color:#48caff;
 }
 
-/* CARDS */
+/* GRID */
 
-.category-grid,
-.grade-grid,
-.subject-grid,
-.teacher-grid{
+.grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-    gap:18px;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+
+    gap:20px;
 }
+
+/* CARD */
 
 .card{
-    padding:25px;
-    border:1px solid rgba(69,202,255,.18);
+    padding:28px;
+
+    border-radius:18px;
+
     background:
     linear-gradient(
         145deg,
-        rgba(15,28,39,.92),
-        rgba(5,10,15,.92)
+        rgba(15,30,42,.95),
+        rgba(5,10,15,.95)
     );
-    border-radius:18px;
+
+    border:1px solid rgba(70,200,255,.18);
+
     cursor:pointer;
+
     transition:.25s;
 }
 
 .card:hover{
-    transform:translateY(-6px);
-    border-color:#45caff;
-    box-shadow:0 10px 35px rgba(0,180,255,.13);
+    transform:translateY(-7px);
+
+    border-color:#48caff;
+
+    box-shadow:
+    0 12px 40px rgba(0,180,255,.15);
 }
 
-.card .num{
-    font-size:13px;
-    color:#45caff;
+.card .small{
+    color:#48caff;
+
+    font-size:12px;
+
     letter-spacing:2px;
 }
 
 .card h3{
-    margin-top:9px;
+    margin-top:10px;
+
     font-size:24px;
 }
 
 .card p{
     margin-top:8px;
-    color:#7895a5;
+
+    color:#7894a3;
+
     font-size:13px;
 }
 
@@ -222,88 +289,129 @@ section{
 
 .panel{
     display:none;
+
     margin-top:35px;
-    padding:28px;
-    border:1px solid rgba(69,202,255,.2);
-    border-radius:20px;
-    background:rgba(7,15,22,.92);
+
+    padding:30px;
+
+    border-radius:22px;
+
+    background:rgba(7,15,22,.94);
+
+    border:1px solid rgba(70,200,255,.2);
 }
 
-.panel.show{
+.panel.active{
     display:block;
-    animation:fade .35s ease;
+
+    animation:appear .3s ease;
 }
 
-@keyframes fade{
+@keyframes appear{
+
     from{
         opacity:0;
-        transform:translateY(10px);
+        transform:translateY(12px);
     }
+
     to{
         opacity:1;
         transform:none;
     }
+
 }
+
+/* BACK */
 
 .back{
     display:inline-block;
-    margin-bottom:22px;
-    color:#45caff;
+
+    margin-bottom:25px;
+
+    color:#48caff;
+
     cursor:pointer;
+
     font-size:14px;
 }
 
-/* TEACHER DETAILS */
+/* TEACHER */
 
-.detail{
-    display:none;
-    margin-top:25px;
-    padding:25px;
-    border-radius:18px;
-    background:#0a141d;
-    border:1px solid rgba(69,202,255,.25);
+.teacher-card{
+    text-align:center;
 }
 
-.detail.show{
+.teacher-card h3{
+    color:#fff;
+}
+
+/* DETAILS */
+
+.details{
+    display:none;
+
+    margin-top:30px;
+
+    padding:28px;
+
+    border-radius:20px;
+
+    background:#09141d;
+
+    border:1px solid rgba(70,200,255,.25);
+}
+
+.details.active{
     display:block;
 }
 
-.detail h3{
-    font-size:28px;
-    color:#45caff;
-    margin-bottom:15px;
+.details h3{
+    color:#48caff;
+
+    font-size:30px;
+
+    margin-bottom:20px;
 }
 
-.detail-row{
-    padding:11px 0;
-    border-bottom:1px solid rgba(255,255,255,.07);
-    color:#a9bfca;
+.info{
+    padding:13px 0;
+
+    border-bottom:
+    1px solid rgba(255,255,255,.07);
+
+    color:#a8bdc8;
 }
 
-.detail-row b{
-    color:white;
+.info strong{
+    color:#fff;
+
     display:inline-block;
-    min-width:115px;
+
+    min-width:130px;
 }
 
 /* CONTACT */
 
 .contact-card{
     text-decoration:none;
-    color:inherit;
+    color:#fff;
 }
 
 /* FOOTER */
 
 footer{
-    padding:50px 20px;
     text-align:center;
-    border-top:1px solid rgba(69,202,255,.12);
-    color:#557080;
+
+    padding:55px 20px;
+
+    color:#607985;
+
+    border-top:
+    1px solid rgba(70,200,255,.12);
 }
 
 footer strong{
-    color:#45caff;
+    color:#48caff;
 }
 
 /* MOBILE */
@@ -311,7 +419,7 @@ footer strong{
 @media(max-width:650px){
 
     nav{
-        padding:15px 5%;
+        padding:0 5%;
     }
 
     nav div:last-child{
@@ -325,13 +433,23 @@ footer strong{
     .section-title h2{
         font-size:32px;
     }
+
+    .panel{
+        padding:20px;
+    }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
-<!-- NAV -->
+
+<!-- =========================
+     NAVIGATION
+========================= -->
 
 <nav>
 
@@ -340,19 +458,35 @@ SIPDULA
 </div>
 
 <div>
-<a href="#home">Home</a>
-<a href="#grades">Grades</a>
-<a href="#contact">Contact</a>
+
+<a href="#home">
+Home
+</a>
+
+<a href="#education">
+Education
+</a>
+
+<a href="#contact">
+Contact
+</a>
+
 </div>
 
 </nav>
 
 
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================= -->
 
-<header class="hero" id="home">
+<header
+class="hero"
+id="home">
 
-<h1>SIPDULA</h1>
+<h1>
+SIPDULA
+</h1>
 
 <p>
 LEARN • THINK • ACHIEVE
@@ -365,44 +499,52 @@ SCROLL TO EXPLORE ↓
 </header>
 
 
-<!-- QUOTE -->
+<!-- =========================
+     QUOTE
+========================= -->
 
 <section class="quote">
 
 <h2>
+
 Education is the
 <span>best investment</span>
 in the world.
+
 </h2>
 
 </section>
 
 
-<!-- GRADES -->
+<!-- =========================
+     EDUCATION
+========================= -->
 
-<section id="grades">
+<section id="education">
 
 <div class="section-title">
 
 <h2>
-Choose Your Grade
+Education
 </h2>
 
 <p>
-Select Primary or Secondary.
+Choose the education section you want to explore.
 </p>
 
 </div>
 
 
-<!-- PRIMARY / SECONDARY -->
+<div class="grid">
 
-<div class="category-grid">
 
-<div class="card"
-onclick="showCategory('primary')">
+<!-- PRIMARY -->
 
-<div class="num">
+<div
+class="card"
+onclick="openPrimary()">
+
+<div class="small">
 01
 </div>
 
@@ -411,16 +553,19 @@ Primary
 </h3>
 
 <p>
-Grades 1 – 5
+Primary education information
 </p>
 
 </div>
 
 
-<div class="card"
-onclick="showCategory('secondary')">
+<!-- SECONDARY -->
 
-<div class="num">
+<div
+class="card"
+onclick="openSecondary()">
+
+<div class="small">
 02
 </div>
 
@@ -434,77 +579,226 @@ Grades 6 – 11
 
 </div>
 
+
 </div>
 
 
-<!-- PRIMARY -->
+<!-- =========================
+     PRIMARY PANEL
+========================= -->
 
-<div id="primaryPanel" class="panel">
+<div
+id="primaryPanel"
+class="panel">
 
-<span class="back"
-onclick="closePanels()">
+<div
+class="back"
+onclick="closeAll()">
+
 ← Back
-</span>
+
+</div>
+
 
 <div class="section-title">
 
 <h2>
-Primary Grades
+Primary Education
 </h2>
 
 <p>
-Select a grade.
+Select a category.
 </p>
 
 </div>
 
-<div class="grade-grid"
-id="primaryGrades">
+
+<div class="grid">
+
+
+<div
+class="card"
+onclick="showPrimaryTeacher('English','Jeewa Kottage')">
+
+<div class="small">
+PRIMARY
+</div>
+
+<h3>
+English
+</h3>
+
+<p>
+Jeewa Kottage
+</p>
+
+</div>
+
+
+<div
+class="card"
+onclick="showPrimaryTeacher('Grade 1, 2','Priyanthi Abeysundara')">
+
+<div class="small">
+PRIMARY
+</div>
+
+<h3>
+Grade 1, 2
+</h3>
+
+<p>
+Priyanthi Abeysundara
+</p>
+
+</div>
+
+
+<div
+class="card"
+onclick="showPrimaryTeacher('Grade 3, 4, 5 Scholarship','Sanjuni Sankalpana')">
+
+<div class="small">
+PRIMARY
+</div>
+
+<h3>
+Grade 3, 4, 5
+</h3>
+
+<p>
+Scholarship • Sanjuni Sankalpana
+</p>
+
+</div>
+
+
+<div
+class="card"
+onclick="showPrimaryTeacher('Akuru Hururu','Ashoka Indrani')">
+
+<div class="small">
+PRIMARY
+</div>
+
+<h3>
+Akuru Hururu
+</h3>
+
+<p>
+Ashoka Indrani
+</p>
+
+</div>
+
+
+<div
+class="card"
+onclick="showPrimaryTeacher('Akuru Hururu','Saduni Jeewanthi')">
+
+<div class="small">
+PRIMARY
+</div>
+
+<h3>
+Akuru Hururu
+</h3>
+
+<p>
+Saduni Jeewanthi
+</p>
+
+</div>
+
+
+<div
+class="card"
+onclick="showPrimaryTeacher('Dancing','Yenali Manodya')">
+
+<div class="small">
+PRIMARY
+</div>
+
+<h3>
+Dancing
+</h3>
+
+<p>
+Yenali Manodya
+</p>
+
+</div>
+
+
+</div>
+
+
+<div
+id="primaryDetails"
+class="details">
 </div>
 
 </div>
 
 
-<!-- SECONDARY -->
+<!-- =========================
+     SECONDARY PANEL
+========================= -->
 
-<div id="secondaryPanel" class="panel">
+<div
+id="secondaryPanel"
+class="panel">
 
-<span class="back"
-onclick="closePanels()">
+<div
+class="back"
+onclick="closeAll()">
+
 ← Back
-</span>
+
+</div>
+
 
 <div class="section-title">
 
 <h2>
-Secondary Grades
+Secondary Education
 </h2>
 
 <p>
-Select a grade.
+Grades 6 – 11
 </p>
 
 </div>
 
-<div class="grade-grid"
-id="secondaryGrades">
+
+<div
+id="secondaryGrades"
+class="grid">
 </div>
 
 </div>
 
 
-<!-- SUBJECTS -->
+<!-- =========================
+     SUBJECT PANEL
+========================= -->
 
-<div id="subjectsPanel" class="panel">
+<div
+id="subjectPanel"
+class="panel">
 
-<span class="back"
-onclick="backToCategory()">
-← Back
-</span>
+<div
+class="back"
+onclick="backToGrades()">
+
+← Back to Grades
+
+</div>
+
 
 <div class="section-title">
 
-<h2 id="gradeTitle">
+<h2 id="selectedGradeTitle">
 Grade
 </h2>
 
@@ -514,40 +808,54 @@ Select a subject.
 
 </div>
 
-<div class="subject-grid"
-id="subjects">
+
+<div
+id="subjects"
+class="grid">
 </div>
 
 </div>
 
 
-<!-- TEACHERS -->
+<!-- =========================
+     TEACHER PANEL
+========================= -->
 
-<div id="teachersPanel" class="panel">
+<div
+id="teacherPanel"
+class="panel">
 
-<span class="back"
+<div
+class="back"
 onclick="backToSubjects()">
-← Back
-</span>
+
+← Back to Subjects
+
+</div>
+
 
 <div class="section-title">
 
-<h2 id="subjectTitle">
+<h2 id="selectedSubjectTitle">
 Subject
 </h2>
 
 <p>
-Teachers for this grade and subject.
+Teachers
 </p>
 
 </div>
 
-<div class="teacher-grid"
-id="teachers">
+
+<div
+id="teachers"
+class="grid">
 </div>
 
-<div id="teacherDetail"
-class="detail">
+
+<div
+id="secondaryDetails"
+class="details">
 </div>
 
 </div>
@@ -555,7 +863,9 @@ class="detail">
 </section>
 
 
-<!-- CONTACT -->
+<!-- =========================
+     CONTACT
+========================= -->
 
 <section id="contact">
 
@@ -571,14 +881,17 @@ Get in touch with SIPDULA.
 
 </div>
 
-<div class="category-grid">
 
+<div class="grid">
+
+
+<!-- PHONE -->
 
 <a
 class="card contact-card"
 href="tel:0714438961">
 
-<div class="num">
+<div class="small">
 CONTACT
 </div>
 
@@ -593,12 +906,14 @@ Call SIPDULA
 </a>
 
 
+<!-- WHATSAPP -->
+
 <a
 class="card contact-card"
 href="https://wa.me/94714438961"
 target="_blank">
 
-<div class="num">
+<div class="small">
 WHATSAPP
 </div>
 
@@ -613,12 +928,14 @@ Chat on WhatsApp
 </a>
 
 
+<!-- LOCATION -->
+
 <a
 class="card contact-card"
 href="https://www.google.com/maps/place/Sipdula/@5.9647155,80.6030074,765m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3ae139b254a8c055:0x2080d23109cd02b9!8m2!3d5.9647155!4d80.6030074!16s%2Fg%2F11v48qjgv0?entry=ttu&g_ep=EgoyMDI2MDkwOS4wIKXMDSoASAFQAw%3D%3D"
 target="_blank">
 
-<div class="num">
+<div class="small">
 LOCATION
 </div>
 
@@ -627,17 +944,20 @@ SIPDULA
 </h3>
 
 <p>
-Open in Google Maps
+Open Google Maps
 </p>
 
 </a>
+
 
 </div>
 
 </section>
 
 
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
@@ -652,296 +972,220 @@ Education • Knowledge • Future
 </footer>
 
 
+
 <script>
 
-/* =========================================
-   SUBJECTS
-========================================= */
+/* ==================================================
+   SECONDARY TEACHER DATA
+   GRADES 6 - 11
+================================================== */
 
-const subjectsByGrade = {
-
-1:[
-"English",
-"Mathematics",
-"Sinhala",
-"Environmental Studies"
-],
-
-2:[
-"English",
-"Mathematics",
-"Sinhala",
-"Environmental Studies"
-],
-
-3:[
-"English",
-"Mathematics",
-"Sinhala",
-"Environmental Studies"
-],
-
-4:[
-"English",
-"Mathematics",
-"Sinhala",
-"Environmental Studies"
-],
-
-5:[
-"English",
-"Mathematics",
-"Sinhala",
-"Environmental Studies"
-],
-
-6:[
-"Science",
-"Mathematics",
-"English",
-"Sinhala",
-"Tamil",
-"History",
-"ICT"
-],
-
-7:[
-"Science",
-"Mathematics",
-"English",
-"Sinhala",
-"Tamil",
-"History",
-"ICT"
-],
-
-8:[
-"Science",
-"Mathematics",
-"English",
-"Sinhala",
-"Tamil",
-"History",
-"ICT"
-],
-
-9:[
-"Science",
-"Mathematics",
-"English",
-"Sinhala",
-"Tamil",
-"History",
-"ICT"
-],
-
-10:[
-"Science",
-"Mathematics",
-"English",
-"Sinhala",
-"Tamil",
-"History",
-"ICT"
-],
-
-11:[
-"Science",
-"Mathematics",
-"English",
-"Sinhala",
-"Tamil",
-"History",
-"ICT"
-]
-
-};
-
-
-/* =========================================
-   TEACHERS
-   BASED ON THE INFORMATION PROVIDED
-========================================= */
-
-const teachersByGrade = {
-
-/* PRIMARY */
-
-1:{
-English:["Jeewa Kottage"]
-},
-
-2:{
-English:["Jeewa Kottage"]
-},
-
-3:{
-English:["Jeewa Kottage"]
-},
-
-4:{
-English:["Jeewa Kottage"]
-},
-
-5:{
-English:["Jeewa Kottage"]
-},
-
-
-/* SECONDARY */
+const secondaryData = {
 
 6:{
-Science:["Amila Nandasena"],
-Mathematics:["Movin Rajapaksha"],
-English:["Prabath Nallaperuma"],
-Sinhala:["C.G. Liyanage"],
-Tamil:["Nilmini Abeynayaka"],
-History:[],
-ICT:[]
+    Science:["Amila Nandasena"],
+    English:["Prabath Nallaperuma"],
+    Mathematics:["Movin Rajapaksha"],
+    Sinhala:["C.G. Liyanage"],
+    Tamil:["Nilmini Abeynayaka"]
 },
 
 7:{
-Science:["Amila Nandasena"],
-Mathematics:["Movin Rajapaksha"],
-English:["Prabath Nallaperuma"],
-Sinhala:["C.G. Liyanage"],
-Tamil:["Nilmini Abeynayaka"],
-History:[],
-ICT:[]
+    Science:["Amila Nandasena"],
+    English:["Prabath Nallaperuma"],
+    Mathematics:["Movin Rajapaksha"],
+    Sinhala:["C.G. Liyanage"],
+    Tamil:["Nilmini Abeynayaka"]
 },
 
 8:{
-Science:["Amila Nandasena"],
-Mathematics:["Movin Rajapaksha"],
-English:["Prabath Nallaperuma"],
-Sinhala:["C.G. Liyanage"],
-Tamil:["Nilmini Abeynayaka"],
-History:[],
-ICT:[]
+    Science:["Amila Nandasena"],
+    English:["Prabath Nallaperuma"],
+    Mathematics:["Movin Rajapaksha"],
+    Sinhala:["C.G. Liyanage"],
+    Tamil:["Nilmini Abeynayaka"]
 },
 
 9:{
-Science:["Amila Nandasena"],
-Mathematics:["Movin Rajapaksha"],
-English:["Prabath Nallaperuma"],
-Sinhala:["C.G. Liyanage"],
-Tamil:["Nilmini Abeynayaka"],
-History:[],
-ICT:[]
+    Science:["Amila Nandasena"],
+    English:["Prabath Nallaperuma"],
+    Mathematics:["Movin Rajapaksha"],
+    Sinhala:["C.G. Liyanage"],
+    Tamil:["Nilmini Abeynayaka"]
 },
 
 10:{
-Science:["Amila Nandasena"],
-Mathematics:["Movin Rajapaksha"],
-English:["Prabath Nallaperuma"],
-Sinhala:["C.G. Liyanage"],
-Tamil:["Nilmini Abeynayaka"],
-History:[],
-ICT:[]
+    Science:["Amila Nandasena"],
+    English:["Prabath Nallaperuma"],
+    Mathematics:["Movin Rajapaksha"],
+    Sinhala:["C.G. Liyanage"],
+    Tamil:["Nilmini Abeynayaka"]
 },
 
 11:{
-Science:["Amila Nandasena"],
-Mathematics:["Movin Rajapaksha"],
-English:["Prabath Nallaperuma"],
-Sinhala:["C.G. Liyanage"],
-Tamil:["Nilmini Abeynayaka"],
-History:[],
-ICT:[]
+    Science:["Amila Nandasena"],
+    English:["Prabath Nallaperuma"],
+    Mathematics:["Movin Rajapaksha"],
+    Sinhala:["C.G. Liyanage"],
+    Tamil:["Nilmini Abeynayaka"]
 }
 
 };
 
 
-/* =========================================
+/* ==================================================
    TEACHER DETAILS
-========================================= */
+================================================== */
 
 const teacherDetails = {
 
 "Jeewa Kottage":{
-classes:"To be updated",
-time:"To be updated"
+    classes:"To be updated",
+    time:"To be updated"
 },
 
-"Prabath Nallaperuma":{
-classes:"To be updated",
-time:"To be updated"
+"Priyanthi Abeysundara":{
+    classes:"To be updated",
+    time:"To be updated"
 },
 
-"Nilmini Abeynayaka":{
-classes:"To be updated",
-time:"To be updated"
+"Sanjuni Sankalpana":{
+    classes:"To be updated",
+    time:"To be updated"
+},
+
+"Ashoka Indrani":{
+    classes:"To be updated",
+    time:"To be updated"
+},
+
+"Saduni Jeewanthi":{
+    classes:"To be updated",
+    time:"To be updated"
+},
+
+"Yenali Manodya":{
+    classes:"To be updated",
+    time:"To be updated"
 },
 
 "Amila Nandasena":{
-classes:"To be updated",
-time:"To be updated"
+    classes:"To be updated",
+    time:"To be updated"
+},
+
+"Prabath Nallaperuma":{
+    classes:"To be updated",
+    time:"To be updated"
 },
 
 "Movin Rajapaksha":{
-classes:"To be updated",
-time:"To be updated"
+    classes:"To be updated",
+    time:"To be updated"
 },
 
 "C.G. Liyanage":{
-classes:"To be updated",
-time:"To be updated"
+    classes:"To be updated",
+    time:"To be updated"
+},
+
+"Nilmini Abeynayaka":{
+    classes:"To be updated",
+    time:"To be updated"
 }
 
 };
 
 
-/* =========================================
+/* ==================================================
    VARIABLES
-========================================= */
+================================================== */
 
-let currentCategory="";
-let currentGrade="";
-let currentSubject="";
+let currentGrade = 0;
 
-
-const $ = id =>
-document.getElementById(id);
+let currentSubject = "";
 
 
-function show(id){
+/* ==================================================
+   ELEMENTS
+================================================== */
 
-$(id).classList.add("show");
+const primaryPanel =
+document.getElementById("primaryPanel");
+
+const secondaryPanel =
+document.getElementById("secondaryPanel");
+
+const subjectPanel =
+document.getElementById("subjectPanel");
+
+const teacherPanel =
+document.getElementById("teacherPanel");
+
+
+/* ==================================================
+   OPEN PRIMARY
+================================================== */
+
+function openPrimary(){
+
+closeAll();
+
+primaryPanel.classList.add("active");
+
+primaryPanel.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+});
 
 }
 
 
-function hide(id){
+/* ==================================================
+   OPEN SECONDARY
+================================================== */
 
-$(id).classList.remove("show");
+function openSecondary(){
+
+closeAll();
+
+secondaryPanel.classList.add("active");
+
+createGrades();
+
+secondaryPanel.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+});
 
 }
 
 
-/* =========================================
-   CREATE GRADES
-========================================= */
+/* ==================================================
+   CREATE GRADES 6 - 11
+================================================== */
 
-function makeGrades(id,start,end){
+function createGrades(){
 
-const box=$(id);
+const box =
+document.getElementById("secondaryGrades");
 
 box.innerHTML="";
 
-for(let i=start;i<=end;i++){
+for(let grade=6;grade<=11;grade++){
 
 box.innerHTML += `
 
-<div class="card"
-onclick="selectGrade(${i})">
+<div
+class="card"
+onclick="selectGrade(${grade})">
 
-<div class="num">
-GRADE
+<div class="small">
+SECONDARY
 </div>
 
 <h3>
-${i}
+Grade ${grade}
 </h3>
 
 <p>
@@ -957,82 +1201,43 @@ View subjects
 }
 
 
-makeGrades(
-"primaryGrades",
-1,
-5
-);
-
-makeGrades(
-"secondaryGrades",
-6,
-11
-);
-
-
-/* =========================================
-   CATEGORY
-========================================= */
-
-function showCategory(category){
-
-currentCategory=category;
-
-hide("subjectsPanel");
-hide("teachersPanel");
-
-if(category==="primary"){
-
-hide("secondaryPanel");
-
-show("primaryPanel");
-
-}else{
-
-hide("primaryPanel");
-
-show("secondaryPanel");
-
-}
-
-document
-.getElementById("grades")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-
-/* =========================================
+/* ==================================================
    SELECT GRADE
-========================================= */
+================================================== */
 
 function selectGrade(grade){
 
 currentGrade=grade;
 
-hide("primaryPanel");
-hide("secondaryPanel");
+secondaryPanel.classList.remove("active");
 
-$("gradeTitle").textContent=
+teacherPanel.classList.remove("active");
+
+document
+.getElementById("selectedGradeTitle")
+.textContent =
 "Grade "+grade;
 
+const subjectBox =
+document.getElementById("subjects");
 
-const box=$("subjects");
+subjectBox.innerHTML="";
 
-box.innerHTML="";
+const subjects =
+Object.keys(
+secondaryData[grade]
+);
 
-
-subjectsByGrade[grade].forEach(
+subjects.forEach(
 (subject,index)=>{
 
-box.innerHTML += `
+subjectBox.innerHTML += `
 
-<div class="card"
+<div
+class="card"
 onclick="showTeachers('${subject}')">
 
-<div class="num">
+<div class="small">
 SUBJECT ${String(index+1).padStart(2,"0")}
 </div>
 
@@ -1050,56 +1255,54 @@ View teachers
 
 });
 
+subjectPanel.classList.add("active");
 
-show("subjectsPanel");
-
-$("subjectsPanel")
-.scrollIntoView({
-behavior:"smooth"
+subjectPanel.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
 });
 
 }
 
 
-/* =========================================
+/* ==================================================
    SHOW TEACHERS
-========================================= */
+================================================== */
 
 function showTeachers(subject){
 
 currentSubject=subject;
 
-$("subjectTitle").textContent=
+document
+.getElementById("selectedSubjectTitle")
+.textContent =
 subject+" • Grade "+currentGrade;
 
+const teacherBox =
+document.getElementById("teachers");
+
+teacherBox.innerHTML="";
 
 const list =
-(
-teachersByGrade[currentGrade] &&
-teachersByGrade[currentGrade][subject]
-)
-|| [];
-
-
-const box=$("teachers");
+secondaryData[currentGrade][subject] || [];
 
 
 if(list.length===0){
 
-box.innerHTML=`
+teacherBox.innerHTML=`
 
 <div class="card">
 
-<div class="num">
+<div class="small">
 TEACHERS
 </div>
 
 <h3>
-Teacher list coming soon
+Teacher information coming soon
 </h3>
 
 <p>
-Teacher information will be added here.
+Details will be added later.
 </p>
 
 </div>
@@ -1108,21 +1311,21 @@ Teacher information will be added here.
 
 }else{
 
-box.innerHTML="";
+list.forEach(
+teacher=>{
 
-list.forEach(name=>{
+teacherBox.innerHTML += `
 
-box.innerHTML += `
+<div
+class="card teacher-card"
+onclick="showSecondaryDetails('${teacher}')">
 
-<div class="card"
-onclick="showDetails('${name}')">
-
-<div class="num">
+<div class="small">
 TEACHER
 </div>
 
 <h3>
-${name}
+${teacher}
 </h3>
 
 <p>
@@ -1138,123 +1341,185 @@ Click to view details
 }
 
 
-hideDetail();
+document
+.getElementById("secondaryDetails")
+.classList.remove("active");
 
-show("teachersPanel");
+subjectPanel.classList.remove("active");
 
-$("teachersPanel")
-.scrollIntoView({
-behavior:"smooth"
+teacherPanel.classList.add("active");
+
+teacherPanel.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
 });
 
 }
 
 
-/* =========================================
-   TEACHER DETAILS
-========================================= */
+/* ==================================================
+   SECONDARY TEACHER DETAILS
+================================================== */
 
-function hideDetail(){
+function showSecondaryDetails(name){
 
-$("teacherDetail")
-.classList.remove("show");
-
-}
-
-
-function showDetails(name){
-
-const info =
-teacherDetails[name]
-||
+const details =
+teacherDetails[name] ||
 {
-classes:"To be updated",
-time:"To be updated"
+    classes:"To be updated",
+    time:"To be updated"
 };
 
+const box =
+document.getElementById("secondaryDetails");
 
-$("teacherDetail").innerHTML=`
+box.innerHTML=`
 
 <h3>
 ${name}
 </h3>
 
-<div class="detail-row">
-<b>Grade:</b>
+<div class="info">
+<strong>Grade:</strong>
 Grade ${currentGrade}
 </div>
 
-<div class="detail-row">
-<b>Subject:</b>
+<div class="info">
+<strong>Subject:</strong>
 ${currentSubject}
 </div>
 
-<div class="detail-row">
-<b>Classes:</b>
-${info.classes}
+<div class="info">
+<strong>Classes:</strong>
+${details.classes}
 </div>
 
-<div class="detail-row">
-<b>Class Time:</b>
-${info.time}
+<div class="info">
+<strong>Class Time:</strong>
+${details.time}
 </div>
 
 `;
 
-show("teacherDetail");
+box.classList.add("active");
 
-$("teacherDetail")
-.scrollIntoView({
-behavior:"smooth",
-block:"center"
+box.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
 });
 
 }
 
 
-/* =========================================
-   BACK BUTTONS
-========================================= */
+/* ==================================================
+   PRIMARY TEACHER DETAILS
+================================================== */
 
-function backToCategory(){
+function showPrimaryTeacher(category,name){
 
-hide("subjectsPanel");
+const box =
+document.getElementById("primaryDetails");
 
-hide("teachersPanel");
+const details =
+teacherDetails[name] ||
+{
+    classes:"To be updated",
+    time:"To be updated"
+};
 
-if(currentCategory==="primary"){
+box.innerHTML=`
 
-show("primaryPanel");
+<h3>
+${name}
+</h3>
 
-}else{
+<div class="info">
+<strong>Section:</strong>
+${category}
+</div>
 
-show("secondaryPanel");
+<div class="info">
+<strong>Classes:</strong>
+${details.classes}
+</div>
+
+<div class="info">
+<strong>Class Time:</strong>
+${details.time}
+</div>
+
+`;
+
+box.classList.add("active");
+
+box.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+});
 
 }
 
+
+/* ==================================================
+   BACK TO GRADES
+================================================== */
+
+function backToGrades(){
+
+subjectPanel.classList.remove("active");
+
+teacherPanel.classList.remove("active");
+
+secondaryPanel.classList.add("active");
+
+secondaryPanel.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+});
+
 }
 
+
+/* ==================================================
+   BACK TO SUBJECTS
+================================================== */
 
 function backToSubjects(){
 
-hide("teachersPanel");
+teacherPanel.classList.remove("active");
 
-show("subjectsPanel");
+subjectPanel.classList.add("active");
+
+subjectPanel.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+});
+
+}
+
+
+/* ==================================================
+   CLOSE ALL
+================================================== */
+
+function closeAll(){
+
+primaryPanel.classList.remove("active");
+
+secondaryPanel.classList.remove("active");
+
+subjectPanel.classList.remove("active");
+
+teacherPanel.classList.remove("active");
 
 }
 
 
-function closePanels(){
+/* ==================================================
+   INITIALIZE
+================================================== */
 
-hide("primaryPanel");
-
-hide("secondaryPanel");
-
-hide("subjectsPanel");
-
-hide("teachersPanel");
-
-}
+createGrades();
 
 </script>
 
