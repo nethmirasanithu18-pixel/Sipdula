@@ -2,815 +2,575 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SIPDULA | Education</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SIPDULA - Education</title>
 <meta name="description" content="SIPDULA - Education is the best investment in the world.">
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#05070b;
-    color:#fff;
-    overflow-x:hidden;
+    background:#020308;color:white;font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden
 }
 
-/* BACKGROUND */
+/* ===== V1 LIVE BACKGROUND ===== */
 body::before{
-    content:"";
-    position:fixed;
-    inset:0;
+    content:"";position:fixed;inset:0;z-index:-2;
     background:
-        radial-gradient(circle at 20% 20%,rgba(0,140,255,.12),transparent 30%),
-        radial-gradient(circle at 80% 70%,rgba(0,255,255,.08),transparent 30%);
-    pointer-events:none;
-    z-index:-1;
+    radial-gradient(circle at 50% 10%,#123d68 0%,transparent 35%),
+    radial-gradient(circle at 20% 80%,#071d35 0%,transparent 30%),
+    #020308
+}
+#particles{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.particle{
+    position:absolute;width:3px;height:3px;background:#55baff;
+    border-radius:50%;box-shadow:0 0 12px #55baff;
+    animation:float linear infinite
+}
+@keyframes float{
+    from{transform:translateY(105vh);opacity:0}
+    20%{opacity:1}80%{opacity:1}
+    to{transform:translateY(-10vh);opacity:0}
 }
 
-/* HEADER */
-header{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:40px 20px;
-}
-
-.school-logo{
-    width:140px;
-    height:140px;
-    object-fit:contain;
-    margin-bottom:25px;
-    filter:drop-shadow(0 0 18px rgba(0,170,255,.65));
-}
-
-.logo-title{
-    font-size:clamp(55px,12vw,125px);
-    font-weight:900;
-    letter-spacing:10px;
-    color:#fff;
-    text-shadow:
-        0 0 10px #008cff,
-        0 0 30px rgba(0,140,255,.7);
-}
-
-.subtitle{
-    margin-top:20px;
-    font-size:clamp(16px,2vw,23px);
-    color:#b9dfff;
-    letter-spacing:2px;
-}
-
-.hero-line{
-    width:120px;
-    height:3px;
-    margin:30px auto;
-    background:#00aaff;
-    box-shadow:0 0 15px #00aaff;
-}
-
-/* NAVIGATION */
+/* ===== NAV ===== */
 nav{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    flex-wrap:wrap;
-    padding:14px;
-    background:rgba(3,6,12,.92);
-    border-bottom:1px solid rgba(0,170,255,.25);
-    backdrop-filter:blur(10px);
+    position:fixed;top:0;left:0;width:100%;height:70px;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:0 7%;background:rgba(0,0,0,.5);
+    backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.1);
+    z-index:100
 }
+.logo{font-size:23px;font-weight:900;letter-spacing:5px;text-shadow:0 0 20px #278edb}
+nav a{color:#aaa;text-decoration:none;margin-left:24px;font-size:12px;letter-spacing:2px;transition:.3s}
+nav a:hover{color:#55baff}
 
-nav a{
-    text-decoration:none;
-    color:#cfeaff;
-    padding:10px 18px;
-    border:1px solid rgba(0,170,255,.25);
-    border-radius:8px;
-    transition:.25s;
+/* ===== HERO ===== */
+.hero{
+    min-height:100vh;display:flex;justify-content:center;align-items:center;
+    text-align:center;position:relative;padding:90px 20px 40px
 }
-
-nav a:hover{
-    color:#fff;
-    background:rgba(0,140,255,.15);
-    border-color:#00aaff;
-    box-shadow:0 0 15px rgba(0,170,255,.35);
+.heroContent{animation:heroIn 1.5s ease-out}
+@keyframes heroIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+.school-logo{
+    width:min(180px,40vw);max-height:180px;object-fit:contain;
+    margin-bottom:18px;filter:drop-shadow(0 0 25px rgba(85,186,255,.4))
 }
-
-/* SECTIONS */
-section{
-    max-width:1200px;
-    margin:auto;
-    padding:80px 20px;
+.subtitle{color:#55baff;font-size:14px;letter-spacing:9px;margin-bottom:25px}
+.sipdula{
+    font-size:clamp(60px,16vw,220px);font-weight:900;letter-spacing:15px;
+    background:linear-gradient(90deg,#fff,#55baff,#fff);background-size:200% auto;
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shine 4s linear infinite;text-shadow:0 0 50px rgba(50,160,255,.35)
 }
+@keyframes shine{to{background-position:200% center}}
+.hero-quote{color:#aaa;margin-top:20px;letter-spacing:2px}
+.scroll{position:absolute;bottom:35px;font-size:12px;letter-spacing:5px;color:#aaa;animation:bounce 2s infinite}
+@keyframes bounce{50%{transform:translateY(10px)}}
 
-.section-title{
-    text-align:center;
-    font-size:38px;
-    margin-bottom:12px;
-    color:#fff;
-    text-shadow:0 0 15px rgba(0,170,255,.5);
+/* ===== SECTIONS ===== */
+.grade-section,.primary-section,.notice-section,.contact-section{
+    min-height:70vh;padding:120px 7%;text-align:center
 }
+.title{font-size:clamp(38px,6vw,75px);font-weight:900;margin-bottom:15px}
+.title span{color:#55baff}
+.description{color:#888;letter-spacing:2px;margin-bottom:55px}
 
-.section-description{
-    text-align:center;
-    color:#8fb8d5;
-    margin-bottom:40px;
+/* ===== GRADES ===== */
+.grade-grid{
+    max-width:1100px;margin:auto;display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:25px
 }
-
-/* PANELS */
-.panel{
-    background:rgba(8,15,25,.82);
-    border:1px solid rgba(0,170,255,.25);
-    border-radius:18px;
-    padding:30px;
-    margin-bottom:40px;
-    box-shadow:0 0 30px rgba(0,100,180,.08);
-}
-
-.panel-title{
-    font-size:28px;
-    color:#00bfff;
-    margin-bottom:8px;
-}
-
-.panel-subtitle{
-    color:#91aec3;
-    margin-bottom:25px;
-}
-
-/* CARDS */
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:18px;
-}
-
-.card{
-    background:linear-gradient(145deg,#0b1420,#060a10);
-    border:1px solid rgba(0,170,255,.2);
-    border-radius:14px;
-    padding:24px;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.card:hover{
-    transform:translateY(-5px);
-    border-color:#00aaff;
-    box-shadow:0 0 25px rgba(0,170,255,.22);
-}
-
-.card h3{
-    color:#fff;
-    font-size:20px;
-    margin-bottom:8px;
-}
-
-.card p{
-    color:#82b8d8;
-    line-height:1.5;
-}
-
-/* GRADE */
 .grade-card{
-    text-align:center;
-    padding:28px 15px;
+    height:180px;display:flex;flex-direction:column;justify-content:center;
+    align-items:center;cursor:pointer;
+    background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.12);border-radius:25px;
+    backdrop-filter:blur(15px);transition:.4s
 }
+.grade-card:hover{transform:translateY(-12px) scale(1.03);border-color:#55baff;box-shadow:0 0 35px rgba(50,160,255,.25)}
+.grade-number{font-size:55px;font-weight:900;color:#55baff;text-shadow:0 0 25px rgba(80,180,255,.5)}
+.grade-card p{margin-top:10px;color:#aaa;letter-spacing:2px}
 
-.grade-number{
-    font-size:34px;
-    font-weight:bold;
-    color:#00bfff;
-    margin-bottom:8px;
+/* ===== SUBJECTS / TEACHERS ===== */
+.subject-area{display:none;max-width:1100px;margin:70px auto 0;animation:appear .6s ease}
+.subject-area.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.selected-grade{color:#55baff;letter-spacing:5px;margin-bottom:30px}
+.subject-grid,.teacher-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:20px
 }
-
-/* TEACHER */
-.teacher-card{
-    border-left:3px solid #00aaff;
+.subject-card,.teacher-button{
+    padding:28px 20px;cursor:pointer;border-radius:20px;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+    transition:.35s
 }
-
-.teacher-card h3{
-    color:#fff;
+.subject-card:hover,.teacher-button:hover{
+    transform:translateY(-8px);border-color:#55baff;background:rgba(40,130,210,.12)
 }
+.subject-icon{font-size:45px;margin-bottom:15px}
+.teacher-icon{font-size:30px;margin-bottom:12px}
+.teacher-button{text-align:left}
+.teacher-button h3{font-size:20px}.teacher-button p{color:#777;margin-top:5px}
+.teacher-list{display:none;margin-top:50px;animation:appear .6s ease}
+.teacher-list.active{display:block}
+.teacher-list h2{font-size:35px;margin-bottom:25px}
 
-.teacher-card .subject{
-    color:#00bfff;
-    font-size:14px;
-    margin-bottom:8px;
+/* ===== DETAILS ===== */
+.teacher-details{
+    display:none;max-width:800px;margin:60px auto 0;padding:50px;
+    border-radius:30px;
+    background:linear-gradient(145deg,rgba(35,120,190,.18),rgba(255,255,255,.04));
+    border:1px solid rgba(85,186,255,.4);
+    box-shadow:0 0 50px rgba(40,150,230,.12);
+    animation:appear .6s ease;text-align:center
 }
-
-/* MODAL */
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.82);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-    z-index:2000;
+.teacher-details.active{display:block}
+.big-icon{font-size:70px;margin-bottom:20px}
+.detail-subject{color:#55baff;font-size:13px;letter-spacing:5px;margin-bottom:15px}
+.teacher-name{font-size:clamp(32px,5vw,55px);font-weight:900;margin-bottom:40px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.detail-box{padding:25px;border-radius:18px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08)}
+.detail-box .icon{font-size:30px;margin-bottom:12px}
+.detail-box h4{color:#55baff;margin-bottom:8px}.detail-box p{color:#bbb}
+.close,.admin-btn{
+    margin-top:25px;padding:12px 25px;background:transparent;color:white;
+    border:1px solid #55baff;border-radius:30px;cursor:pointer;transition:.3s
 }
+.close:hover,.admin-btn:hover{background:#55baff;color:#000}
 
-.modal.active{
-    display:flex;
+/* ===== NOTICE ===== */
+.notice-panel{
+    max-width:900px;margin:auto;padding:30px;border:1px solid rgba(85,186,255,.25);
+    border-radius:25px;background:rgba(255,255,255,.04);backdrop-filter:blur(15px)
 }
-
-.modal-box{
-    width:min(520px,100%);
-    background:#08111c;
-    border:1px solid #00aaff;
-    border-radius:18px;
-    padding:30px;
-    box-shadow:0 0 40px rgba(0,170,255,.3);
-    position:relative;
+.notice-item{
+    padding:22px;text-align:left;border:1px solid rgba(255,255,255,.1);
+    border-radius:18px;margin-bottom:15px;background:rgba(255,255,255,.04)
 }
-
-.close{
-    position:absolute;
-    top:12px;
-    right:18px;
-    font-size:28px;
-    cursor:pointer;
-    color:#9ac9e8;
+.notice-item h3{color:#55baff;margin-bottom:8px}
+.notice-date{font-size:12px;color:#777;margin-bottom:8px}
+.notice-empty{color:#777;padding:15px}
+.notice-form input,.notice-form textarea,.login-box input,.authorized-area input{
+    width:100%;margin:7px 0;padding:14px;border-radius:12px;
+    border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.4);color:#fff
 }
+.notice-form textarea{min-height:100px;resize:vertical}
+.admin-panel{margin-top:25px}.admin-area{margin-top:20px}
+.authorized-area{margin-top:25px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1)}
+.auth-email{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid rgba(255,255,255,.08);color:#aaa}
+.auth-email button{padding:6px 12px;border:1px solid #55baff;background:transparent;color:#fff;border-radius:15px;cursor:pointer}
 
-.close:hover{
-    color:#fff;
-}
-
-.modal-box h2{
-    color:#00bfff;
-    margin-bottom:20px;
-}
-
-.info{
-    padding:12px 0;
-    border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.info span{
-    color:#7da5bd;
-}
-
-/* CONTACT */
-.contact-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:20px;
-}
-
+/* ===== CONTACT ===== */
+.contact-grid{max-width:1000px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
 .contact-card{
-    background:#08111c;
-    border:1px solid rgba(0,170,255,.2);
-    border-radius:15px;
-    padding:25px;
-    text-align:center;
+    padding:30px;border:1px solid rgba(255,255,255,.1);border-radius:20px;
+    background:rgba(255,255,255,.04);text-decoration:none;color:#fff;
+    display:flex;flex-direction:column;gap:12px;transition:.3s
 }
+.contact-card:hover{border-color:#55baff;transform:translateY(-6px)}
+.contact-card b{color:#55baff;letter-spacing:2px}.contact-card span{color:#aaa}
 
-.contact-card h3{
-    color:#00bfff;
-    margin-bottom:12px;
+/* ===== LOGIN ===== */
+.login-modal{
+    position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(12px);
+    z-index:500;display:none;align-items:center;justify-content:center
 }
-
-.contact-card p{
-    color:#b7d1e2;
-    line-height:1.6;
+.login-box{
+    width:min(420px,90%);padding:35px;border:1px solid #55baff;
+    border-radius:25px;background:#050b12;text-align:center
 }
+.login-box h2{margin-bottom:20px}.login-box p{color:#ff6b6b;margin-top:12px}
 
-.contact-btn{
-    display:inline-block;
-    margin-top:15px;
-    padding:11px 20px;
-    background:#008cff;
-    color:#fff;
-    text-decoration:none;
-    border-radius:8px;
-    transition:.25s;
-}
+/* ===== FINAL / FOOTER ===== */
+.final{min-height:70vh;display:flex;justify-content:center;align-items:center;text-align:center;padding:80px 20px}
+.final h2{font-size:clamp(40px,7vw,90px);line-height:1.1}
+.final span{color:#55baff}
+footer{padding:50px;text-align:center;border-top:1px solid rgba(255,255,255,.08)}
+footer h3{letter-spacing:7px}footer p{color:#666;margin-top:12px}
 
-.contact-btn:hover{
-    background:#00aaff;
-    box-shadow:0 0 18px rgba(0,170,255,.45);
-}
-
-/* FOOTER */
-footer{
-    text-align:center;
-    padding:35px 20px;
-    color:#6f8da1;
-    border-top:1px solid rgba(0,170,255,.15);
-    margin-top:30px;
-}
-
-footer strong{
-    color:#00aaff;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-
-    .school-logo{
-        width:110px;
-        height:110px;
-    }
-
-    .logo-title{
-        letter-spacing:5px;
-    }
-
-    section{
-        padding:60px 15px;
-    }
-
-    .panel{
-        padding:20px;
-    }
-
-    .section-title{
-        font-size:30px;
-    }
+@media(max-width:650px){
+    nav{padding:0 20px}nav div:last-child{display:none}
+    .sipdula{letter-spacing:6px}.detail-grid{grid-template-columns:1fr}
+    .teacher-details{padding:30px 20px}.subtitle{letter-spacing:5px}
 }
 </style>
 </head>
 
 <body>
+<div id="particles"></div>
 
-<!-- HERO -->
-<header id="home">
-
-    <img src="logo.png" alt="SIPDULA Logo" class="school-logo">
-
-    <div class="logo-title">SIPDULA</div>
-
-    <div class="hero-line"></div>
-
-    <p class="subtitle">
-        Education is the best investment in the world.
-    </p>
-
-</header>
-
-<!-- NAVIGATION -->
 <nav>
-    <a href="#home">Home</a>
-    <a href="#primary">Primary</a>
-    <a href="#secondary">Grades 6–11</a>
-    <a href="#contact">Contact</a>
+    <div class="logo">SIPDULA</div>
+    <div>
+        <a href="#home">HOME</a>
+        <a href="#primary">PRIMARY</a>
+        <a href="#grades">GRADES</a>
+        <a href="#notice">NOTICE</a>
+        <a href="#contact">CONTACT</a>
+        <a href="#future">FUTURE</a>
+    </div>
 </nav>
 
-
-<!-- PRIMARY -->
-<section id="primary">
-
-    <h2 class="section-title">Primary Education</h2>
-
-    <p class="section-description">
-        Primary classes and teachers
-    </p>
-
-    <div class="panel">
-
-        <h3 class="panel-title">Primary Section</h3>
-
-        <p class="panel-subtitle">
-            Click a teacher to view details.
-        </p>
-
-        <div class="cards">
-
-            <div class="card teacher-card"
-                 onclick="showTeacher(
-                 'Jeewa Kottage',
-                 'English',
-                 'Primary',
-                 'To be updated',
-                 'To be updated'
-                 )">
-                <div class="subject">English</div>
-                <h3>Jeewa Kottage</h3>
-                <p>Primary English</p>
-            </div>
-
-
-            <div class="card teacher-card"
-                 onclick="showTeacher(
-                 'Priyanthi Abeysundara',
-                 'Grade 1, 2',
-                 'Primary',
-                 'To be updated',
-                 'To be updated'
-                 )">
-                <div class="subject">Grade 1, 2</div>
-                <h3>Priyanthi Abeysundara</h3>
-                <p>Primary Classes</p>
-            </div>
-
-
-            <div class="card teacher-card"
-                 onclick="showTeacher(
-                 'Sanjuni Sankalpana',
-                 'Grade 3, 4, 5 Scholarship',
-                 'Primary',
-                 'To be updated',
-                 'To be updated'
-                 )">
-                <div class="subject">Grade 3, 4, 5 Scholarship</div>
-                <h3>Sanjuni Sankalpana</h3>
-                <p>Primary Classes</p>
-            </div>
-
-
-            <div class="card teacher-card"
-                 onclick="showTeacher(
-                 'Ashoka Indrani',
-                 'Akuru Hururu',
-                 'Primary',
-                 'To be updated',
-                 'To be updated'
-                 )">
-                <div class="subject">Akuru Hururu</div>
-                <h3>Ashoka Indrani</h3>
-                <p>Primary Section</p>
-            </div>
-
-
-            <div class="card teacher-card"
-                 onclick="showTeacher(
-                 'Saduni Jeewanthi',
-                 'Akuru Hururu',
-                 'Primary',
-                 'To be updated',
-                 'To be updated'
-                 )">
-                <div class="subject">Akuru Hururu</div>
-                <h3>Saduni Jeewanthi</h3>
-                <p>Primary Section</p>
-            </div>
-
-
-            <div class="card teacher-card"
-                 onclick="showTeacher(
-                 'Yenali Manodya',
-                 'Dancing',
-                 'Primary',
-                 'To be updated',
-                 'To be updated'
-                 )">
-                <div class="subject">Dancing</div>
-                <h3>Yenali Manodya</h3>
-                <p>Primary Dancing</p>
-            </div>
-
-        </div>
+<section class="hero" id="home">
+    <div class="heroContent">
+        <img src="logo.png" alt="SIPDULA Logo" class="school-logo">
+        <div class="subtitle">KNOWLEDGE • FUTURE • SUCCESS</div>
+        <h1 class="sipdula">SIPDULA</h1>
+        <p class="hero-quote">Education is the best investment in the world.</p>
     </div>
-
+    <div class="scroll">SCROLL DOWN ↓</div>
 </section>
 
+<section class="primary-section" id="primary">
+    <h2 class="title">PRIMARY <span>TEACHERS</span></h2>
+    <p class="description">PRIMARY EDUCATION • TEACHERS AND CLASSES</p>
+    <div class="teacher-grid" id="primaryGrid"></div>
 
-<!-- SECONDARY -->
-<section id="secondary">
-
-    <h2 class="section-title">Grades 6–11</h2>
-
-    <p class="section-description">
-        Select a grade to view subjects and teachers.
-    </p>
-
-    <div class="cards">
-
-        <div class="card grade-card" onclick="openGrade(6)">
-            <div class="grade-number">06</div>
-            <p>Grade 6</p>
+    <div class="teacher-details" id="primaryDetails">
+        <div class="big-icon" id="primaryIcon">🎓</div>
+        <div class="detail-subject" id="primarySubject">PRIMARY</div>
+        <div class="teacher-name" id="primaryName">Teacher Name</div>
+        <div class="detail-grid">
+            <div class="detail-box"><div class="icon">🎓</div><h4>Classes</h4><p id="primaryClasses">To be updated</p></div>
+            <div class="detail-box"><div class="icon">⏰</div><h4>Class Time</h4><p id="primaryTime">To be updated</p></div>
         </div>
-
-        <div class="card grade-card" onclick="openGrade(7)">
-            <div class="grade-number">07</div>
-            <p>Grade 7</p>
-        </div>
-
-        <div class="card grade-card" onclick="openGrade(8)">
-            <div class="grade-number">08</div>
-            <p>Grade 8</p>
-        </div>
-
-        <div class="card grade-card" onclick="openGrade(9)">
-            <div class="grade-number">09</div>
-            <p>Grade 9</p>
-        </div>
-
-        <div class="card grade-card" onclick="openGrade(10)">
-            <div class="grade-number">10</div>
-            <p>Grade 10</p>
-        </div>
-
-        <div class="card grade-card" onclick="openGrade(11)">
-            <div class="grade-number">11</div>
-            <p>Grade 11</p>
-        </div>
-
+        <button class="close" onclick="closePrimary()">CLOSE ×</button>
     </div>
-
 </section>
 
+<section class="grade-section" id="grades">
+    <h2 class="title">SELECT YOUR <span>GRADE</span></h2>
+    <p class="description">CHOOSE YOUR GRADE TO FIND YOUR SUBJECTS AND TEACHERS</p>
 
-<!-- CONTACT -->
-<section id="contact">
+    <div class="grade-grid">
+        <div class="grade-card" onclick="selectGrade(6)"><div class="grade-number">06</div><p>GRADE 6</p></div>
+        <div class="grade-card" onclick="selectGrade(7)"><div class="grade-number">07</div><p>GRADE 7</p></div>
+        <div class="grade-card" onclick="selectGrade(8)"><div class="grade-number">08</div><p>GRADE 8</p></div>
+        <div class="grade-card" onclick="selectGrade(9)"><div class="grade-number">09</div><p>GRADE 9</p></div>
+        <div class="grade-card" onclick="selectGrade(10)"><div class="grade-number">10</div><p>GRADE 10</p></div>
+        <div class="grade-card" onclick="selectGrade(11)"><div class="grade-number">11</div><p>GRADE 11</p></div>
+    </div>
 
-    <h2 class="section-title">Contact SIPDULA</h2>
+    <div class="subject-area" id="subjectArea">
+        <div class="selected-grade" id="selectedGrade">GRADE 6</div>
+        <div class="subject-grid">
+            <div class="subject-card" onclick="showTeachers('Science','🧪')"><div class="subject-icon">🧪</div><h3>Science</h3></div>
+            <div class="subject-card" onclick="showTeachers('Mathematics','📐')"><div class="subject-icon">📐</div><h3>Mathematics</h3></div>
+            <div class="subject-card" onclick="showTeachers('English','📖')"><div class="subject-icon">📖</div><h3>English</h3></div>
+            <div class="subject-card" onclick="showTeachers('Sinhala','📚')"><div class="subject-icon">📚</div><h3>Sinhala</h3></div>
+            <div class="subject-card" onclick="showTeachers('Tamil','🔤')"><div class="subject-icon">🔤</div><h3>Tamil</h3></div>
+        </div>
 
-    <p class="section-description">
-        Get in touch with us
-    </p>
+        <div class="teacher-list" id="teacherList">
+            <h2>Teachers</h2>
+            <div class="teacher-grid" id="teacherGrid"></div>
+        </div>
 
+        <div class="teacher-details" id="teacherDetails">
+            <div class="big-icon" id="bigIcon">🧪</div>
+            <div class="detail-subject" id="detailSubject">SCIENCE</div>
+            <div class="teacher-name" id="detailName">Teacher Name</div>
+            <div class="detail-grid">
+                <div class="detail-box"><div class="icon">🎓</div><h4>Classes</h4><p id="detailClasses">To be updated</p></div>
+                <div class="detail-box"><div class="icon">⏰</div><h4>Class Time</h4><p id="detailTime">To be updated</p></div>
+            </div>
+            <button class="close" onclick="closeDetails()">CLOSE ×</button>
+        </div>
+    </div>
+</section>
+
+<section class="notice-section" id="notice">
+    <h2 class="title">SPECIAL <span>NOTICE</span></h2>
+    <p class="description">LATEST UPDATES FROM SIPDULA</p>
+
+    <div class="notice-panel">
+        <div id="noticeList"><p class="notice-empty">Loading notices...</p></div>
+
+        <div class="admin-panel">
+            <button class="admin-btn" onclick="openLogin()">ADMIN / STAFF LOGIN</button>
+
+            <div id="adminArea" class="admin-area" style="display:none">
+                <div class="notice-form">
+                    <input id="noticeTitle" placeholder="Notice title">
+                    <textarea id="noticeText" placeholder="Notice details"></textarea>
+                    <button class="admin-btn" onclick="addNotice()">ADD NOTICE</button>
+                </div>
+
+                <div id="authorizedArea" class="authorized-area" style="display:none">
+                    <h3>AUTHORIZED EMAILS</h3>
+                    <input id="authEmail" type="email" placeholder="Authorized email">
+                    <button class="admin-btn" onclick="addAuthorizedEmail()">ADD AUTHORIZED EMAIL</button>
+                    <div id="authorizedList"></div>
+                </div>
+
+                <button class="close" onclick="logoutAdmin()">LOG OUT</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact-section" id="contact">
+    <h2 class="title">CONTACT <span>SIPDULA</span></h2>
+    <p class="description">GET IN TOUCH WITH SIPDULA</p>
     <div class="contact-grid">
-
-        <div class="contact-card">
-
-            <h3>Phone</h3>
-
-            <p>
-                0714438961
-            </p>
-
-            <a
-                href="tel:0714438961"
-                class="contact-btn">
-                Call
-            </a>
-
-        </div>
-
-
-        <div class="contact-card">
-
-            <h3>WhatsApp</h3>
-
-            <p>
-                Chat with SIPDULA on WhatsApp
-            </p>
-
-            <a
-                href="https://wa.me/94714438961"
-                target="_blank"
-                class="contact-btn">
-                WhatsApp
-            </a>
-
-        </div>
-
-
-        <div class="contact-card">
-
-            <h3>Location</h3>
-
-            <p>
-                Find SIPDULA on Google Maps
-            </p>
-
-            <a
-                href="https://www.google.com/maps/place/Sipdula/@5.9647155,80.6030074,765m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3ae139b254a8c055:0x2080d23109cd02b9!8m2!3d5.9647155!4d80.6030074!16s%2Fg%2F11v48qjgv0?entry=ttu"
-                target="_blank"
-                class="contact-btn">
-                Open Map
-            </a>
-
-        </div>
-
+        <a class="contact-card" href="tel:0714438961"><b>PHONE</b><span>071 443 8961</span></a>
+        <a class="contact-card" href="https://wa.me/94714438961" target="_blank"><b>WHATSAPP</b><span>Chat with SIPDULA</span></a>
+        <a class="contact-card" href="https://www.google.com/maps/place/Sipdula/@5.9647155,80.6030074,765m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3ae139b254a8c055:0x2080d23109cd02b9!8m2!3d5.9647155!4d80.6030074!16s%2Fg%2F11v48qjgv0?entry=ttu" target="_blank"><b>LOCATION</b><span>Open Google Maps</span></a>
     </div>
-
 </section>
 
+<section class="final" id="future">
+    <h2>EDUCATION IS THE<br><span>BEST INVESTMENT</span><br>IN THE WORLD.</h2>
+</section>
 
-<!-- TEACHER MODAL -->
-<div class="modal" id="teacherModal">
-
-    <div class="modal-box">
-
-        <div class="close" onclick="closeModal()">×</div>
-
-        <h2 id="teacherName">
-            Teacher
-        </h2>
-
-        <div class="info">
-            <span>Grade / Section:</span>
-            <strong id="teacherGrade"></strong>
-        </div>
-
-        <div class="info">
-            <span>Subject:</span>
-            <strong id="teacherSubject"></strong>
-        </div>
-
-        <div class="info">
-            <span>Classes:</span>
-            <strong id="teacherClasses"></strong>
-        </div>
-
-        <div class="info">
-            <span>Class Time:</span>
-            <strong id="teacherTime"></strong>
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- GRADE MODAL -->
-<div class="modal" id="gradeModal">
-
-    <div class="modal-box">
-
-        <div class="close" onclick="closeGrade()">×</div>
-
-        <h2 id="gradeTitle">Grade</h2>
-
-        <div id="gradeSubjects"></div>
-
-    </div>
-
-</div>
-
-
-<!-- FOOTER -->
 <footer>
-
-    <p>
-        © 2026 <strong>SIPDULA</strong>
-    </p>
-
-    <p style="margin-top:8px;">
-        Education is the best investment in the world.
-    </p>
-
+    <h3>SIPDULA</h3>
+    <p>Learn • Grow • Achieve</p>
 </footer>
 
+<div class="login-modal" id="loginModal">
+    <div class="login-box">
+        <h2>ADMIN / STAFF LOGIN</h2>
+        <input id="loginEmail" type="email" placeholder="Email">
+        <input id="loginPassword" type="password" placeholder="Password">
+        <button class="admin-btn" onclick="loginAdmin()">LOGIN</button>
+        <button class="close" onclick="closeLogin()">CANCEL</button>
+        <p id="loginMessage"></p>
+    </div>
+</div>
 
-<script>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import {getFirestore,collection,addDoc,serverTimestamp,query,orderBy,onSnapshot,doc,setDoc,deleteDoc,getDocs}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-/* TEACHER DATA */
-
-const teachers = {
-
-    Science: {
-        name: "Amila Nandasena",
-        subject: "Science"
-    },
-
-    English: {
-        name: "Prabath Nallaperuma",
-        subject: "English"
-    },
-
-    Mathematics: {
-        name: "Movin Rajapaksha",
-        subject: "Mathematics"
-    },
-
-    Sinhala: {
-        name: "C.G. Liyanage",
-        subject: "Sinhala"
-    },
-
-    Tamil: {
-        name: "Nilmini Abeynayaka",
-        subject: "Tamil"
-    }
-
+/* ===== FIREBASE CONFIG ===== */
+const firebaseConfig={
+    apiKey:"AIzaSyAlCEM531snvZmFxCRQhCPeX0L5xSkT4IU",
+    authDomain:"sipdula-f449a.firebaseapp.com",
+    databaseURL:"https://sipdula-f449a-default-rtdb.firebaseio.com",
+    projectId:"sipdula-f449a",
+    storageBucket:"sipdula-f449a.firebasestorage.app",
+    messagingSenderId:"640576943939",
+    appId:"1:640576943939:web:3df76e740f3d5b0544a1f6",
+    measurementId:"G-R51D98CB2T"
 };
 
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const auth=getAuth(app);
 
-/* OPEN TEACHER */
+/* IMPORTANT: Put the SAME admin email here that you placed in Firestore Rules. */
+const ADMIN_EMAIL="YOUR_ADMIN_EMAIL@gmail.com";
 
-function showTeacher(name,subject,grade,classes,time){
-
-    document.getElementById("teacherName").textContent = name;
-
-    document.getElementById("teacherGrade").textContent = grade;
-
-    document.getElementById("teacherSubject").textContent = subject;
-
-    document.getElementById("teacherClasses").textContent = classes;
-
-    document.getElementById("teacherTime").textContent = time;
-
-    document.getElementById("teacherModal")
-        .classList.add("active");
+/* ===== V1 PARTICLES ===== */
+const particles=document.getElementById("particles");
+for(let i=0;i<100;i++){
+    const p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*100+"%";
+    p.style.animationDuration=(5+Math.random()*10)+"s";
+    p.style.animationDelay=Math.random()*10+"s";
+    particles.appendChild(p);
 }
 
+/* ===== TEACHERS ===== */
+const primaryTeachers=[
+    {section:"Primary English",name:"Jeewa Kottage",classes:"To be updated",time:"To be updated",icon:"📖"},
+    {section:"Grade 1, 2",name:"Priyanthi Abeysundara",classes:"To be updated",time:"To be updated",icon:"🎓"},
+    {section:"Grade 3, 4, 5 Scholarship",name:"Sanjuni Sankalpana",classes:"To be updated",time:"To be updated",icon:"🏆"},
+    {section:"Akuru Hururu",name:"Ashoka Indrani",classes:"To be updated",time:"To be updated",icon:"🔤"},
+    {section:"Akuru Hururu",name:"Saduni Jeewanthi",classes:"To be updated",time:"To be updated",icon:"🔤"},
+    {section:"Dancing",name:"Yenali Manodya",classes:"To be updated",time:"To be updated",icon:"💃"}
+];
 
-/* CLOSE TEACHER */
+const teachers={
+    Science:[{name:"Amila Nandasena",classes:"To be updated",time:"To be updated",icon:"🧪"}],
+    English:[{name:"Prabath Nallaperuma",classes:"To be updated",time:"To be updated",icon:"📖"}],
+    Mathematics:[{name:"Movin Rajapaksha",classes:"To be updated",time:"To be updated",icon:"📐"}],
+    Sinhala:[{name:"C.G. Liyanage",classes:"To be updated",time:"To be updated",icon:"📚"}],
+    Tamil:[{name:"Nilmini Abeynayaka",classes:"To be updated",time:"To be updated",icon:"🔤"}]
+};
 
-function closeModal(){
+const primaryGrid=document.getElementById("primaryGrid");
+primaryTeachers.forEach(t=>{
+    const b=document.createElement("div");
+    b.className="teacher-button";
+    b.innerHTML=`<div class="teacher-icon">${t.icon}</div><h3>${t.name}</h3><p>${t.section}</p>`;
+    b.onclick=()=>showPrimaryDetails(t);
+    primaryGrid.appendChild(b);
+});
 
-    document.getElementById("teacherModal")
-        .classList.remove("active");
+window.showPrimaryDetails=t=>{
+    document.getElementById("primaryIcon").innerText=t.icon;
+    document.getElementById("primarySubject").innerText=t.section.toUpperCase();
+    document.getElementById("primaryName").innerText=t.name;
+    document.getElementById("primaryClasses").innerText=t.classes;
+    document.getElementById("primaryTime").innerText=t.time;
+    document.getElementById("primaryDetails").classList.add("active");
+    document.getElementById("primaryDetails").scrollIntoView({behavior:"smooth",block:"center"});
+};
+window.closePrimary=()=>document.getElementById("primaryDetails").classList.remove("active");
 
-}
+/* ===== GRADE UI ===== */
+let currentGrade=6;
+window.selectGrade=grade=>{
+    currentGrade=grade;
+    document.getElementById("selectedGrade").innerText="GRADE "+grade;
+    document.getElementById("subjectArea").classList.add("active");
+    document.getElementById("teacherList").classList.remove("active");
+    document.getElementById("teacherDetails").classList.remove("active");
+    document.getElementById("subjectArea").scrollIntoView({behavior:"smooth",block:"start"});
+};
 
-
-/* OPEN GRADE */
-
-function openGrade(grade){
-
-    const box =
-        document.getElementById("gradeSubjects");
-
-    document.getElementById("gradeTitle").textContent =
-        "Grade " + grade;
-
-    box.innerHTML = "";
-
-    Object.keys(teachers).forEach(function(subject){
-
-        const teacher = teachers[subject];
-
-        const div = document.createElement("div");
-
-        div.className = "card teacher-card";
-
-        div.style.marginBottom = "12px";
-
-        div.innerHTML = `
-            <div class="subject">${subject}</div>
-            <h3>${teacher.name}</h3>
-            <p>Grade ${grade}</p>
-        `;
-
-        div.onclick = function(){
-
-            closeGrade();
-
-            showTeacher(
-                teacher.name,
-                teacher.subject,
-                "Grade " + grade,
-                "To be updated",
-                "To be updated"
-            );
-
-        };
-
-        box.appendChild(div);
-
+window.showTeachers=(subject,icon)=>{
+    const grid=document.getElementById("teacherGrid");
+    grid.innerHTML="";
+    (teachers[subject]||[]).forEach(t=>{
+        const b=document.createElement("div");
+        b.className="teacher-button";
+        b.innerHTML=`<div class="teacher-icon">${t.icon||icon}</div><h3>${t.name}</h3><p>${subject} Teacher • Grade ${currentGrade}</p>`;
+        b.onclick=()=>showDetails(subject,t);
+        grid.appendChild(b);
     });
+    document.getElementById("teacherList").classList.add("active");
+    document.getElementById("teacherDetails").classList.remove("active");
+    document.getElementById("teacherList").scrollIntoView({behavior:"smooth",block:"center"});
+};
 
-    document.getElementById("gradeModal")
-        .classList.add("active");
+function showDetails(subject,t){
+    document.getElementById("bigIcon").innerText=t.icon;
+    document.getElementById("detailSubject").innerText=(subject+" • GRADE "+currentGrade).toUpperCase();
+    document.getElementById("detailName").innerText=t.name;
+    document.getElementById("detailClasses").innerText=t.classes;
+    document.getElementById("detailTime").innerText=t.time;
+    document.getElementById("teacherDetails").classList.add("active");
+    document.getElementById("teacherDetails").scrollIntoView({behavior:"smooth",block:"center"});
+}
+window.closeDetails=()=>document.getElementById("teacherDetails").classList.remove("active");
 
+/* ===== NOTICE SYSTEM ===== */
+function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 }
 
+const noticeList=document.getElementById("noticeList");
+const noticesQuery=query(collection(db,"notices"),orderBy("createdAt","desc"));
 
-/* CLOSE GRADE */
+onSnapshot(noticesQuery,snap=>{
+    if(snap.empty){
+        noticeList.innerHTML='<p class="notice-empty">No notices yet.</p>';
+        return;
+    }
+    noticeList.innerHTML="";
+    snap.forEach(d=>{
+        const n=d.data();
+        const date=n.createdAt?.toDate ? n.createdAt.toDate().toLocaleString() : "Just now";
+        noticeList.innerHTML+=`
+        <div class="notice-item">
+            <div class="notice-date">${date}</div>
+            <h3>${escapeHtml(n.title||"Notice")}</h3>
+            <p>${escapeHtml(n.text||"")}</p>
+        </div>`;
+    });
+},err=>{
+    console.error(err);
+    noticeList.innerHTML='<p class="notice-empty">Notice system could not be loaded.</p>';
+});
 
-function closeGrade(){
+window.openLogin=()=>document.getElementById("loginModal").style.display="flex";
+window.closeLogin=()=>document.getElementById("loginModal").style.display="none";
 
-    document.getElementById("gradeModal")
-        .classList.remove("active");
+window.loginAdmin=async()=>{
+    const email=document.getElementById("loginEmail").value.trim();
+    const password=document.getElementById("loginPassword").value;
+    const msg=document.getElementById("loginMessage");
+    try{
+        await signInWithEmailAndPassword(auth,email,password);
+        msg.innerText="";
+        closeLogin();
+    }catch(e){
+        msg.innerText="Login failed. Check your email and password.";
+    }
+};
 
+window.logoutAdmin=()=>signOut(auth);
+
+window.addNotice=async()=>{
+    const title=document.getElementById("noticeTitle").value.trim();
+    const text=document.getElementById("noticeText").value.trim();
+    if(!title||!text){alert("Please enter both title and details.");return}
+    try{
+        await addDoc(collection(db,"notices"),{
+            title,text,createdAt:serverTimestamp(),
+            createdBy:auth.currentUser?.email||""
+        });
+        document.getElementById("noticeTitle").value="";
+        document.getElementById("noticeText").value="";
+    }catch(e){
+        alert("You are not authorized to add notices.");
+    }
+};
+
+/* ===== MAIN ADMIN EMAIL MANAGEMENT ===== */
+window.addAuthorizedEmail=async()=>{
+    const email=document.getElementById("authEmail").value.trim().toLowerCase();
+    if(!email)return;
+    try{
+        await setDoc(doc(db,"authorizedEmails",email),{
+            email,addedAt:serverTimestamp()
+        });
+        document.getElementById("authEmail").value="";
+        loadAuthorizedEmails();
+    }catch(e){
+        alert("Only the main admin can manage authorized emails.");
+    }
+};
+
+async function loadAuthorizedEmails(){
+    const list=document.getElementById("authorizedList");
+    try{
+        const snap=await getDocs(collection(db,"authorizedEmails"));
+        list.innerHTML="";
+        snap.forEach(d=>{
+            const email=d.data().email||d.id;
+            const row=document.createElement("div");
+            row.className="auth-email";
+            row.innerHTML=`<span>${escapeHtml(email)}</span>`;
+            const btn=document.createElement("button");
+            btn.innerText="REMOVE";
+            btn.onclick=async()=>{
+                if(confirm("Remove this authorized email?")){
+                    await deleteDoc(doc(db,"authorizedEmails",d.id));
+                    loadAuthorizedEmails();
+                }
+            };
+            row.appendChild(btn);
+            list.appendChild(row);
+        });
+    }catch(e){
+        list.innerHTML='<p class="notice-empty">Only the main admin can view this list.</p>';
+    }
 }
 
+onAuthStateChanged(auth,user=>{
+    const area=document.getElementById("adminArea");
+    const authorized=document.getElementById("authorizedArea");
 
-/* CLOSE WHEN CLICKING OUTSIDE */
-
-document.getElementById("teacherModal")
-.addEventListener("click",function(e){
-
-    if(e.target === this){
-        closeModal();
+    if(user){
+        area.style.display="block";
+        const isMainAdmin=(user.email||"").toLowerCase()===ADMIN_EMAIL.toLowerCase();
+        authorized.style.display=isMainAdmin?"block":"none";
+        if(isMainAdmin)loadAuthorizedEmails();
+    }else{
+        area.style.display="none";
+        authorized.style.display="none";
     }
-
 });
-
-
-document.getElementById("gradeModal")
-.addEventListener("click",function(e){
-
-    if(e.target === this){
-        closeGrade();
-    }
-
-});
-
 </script>
-
 </body>
 </html>
