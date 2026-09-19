@@ -2067,112 +2067,114 @@ window.showPrimaryDetails=t=>{
         "primaryIcon"
     ).innerText=t.icon;
 
-
     document.getElementById(
         "primarySubject"
-    ).innerText=
-        t.section.toUpperCase();
-
+    ).innerText=t.section.toUpperCase();
 
     document.getElementById(
         "primaryName"
     ).innerText=t.name;
 
+    /* ================================================= */
+    /* PRIMARY CLASS / GRADE LIST */
+    /* Every primary teacher now opens a list of classes. */
+    /* Click a class/grade to see its exact time.       */
+    /* ================================================= */
 
-    /* SANJUNI */
+    let classDetails=t.classDetails;
 
-    if(t.classDetails){
+    if(!classDetails){
 
-        document.getElementById(
-            "primaryClasses"
-        ).innerHTML=`
+        if(t.name==="Jeewa Kottage"){
 
-            <div class="sanjuni-class-grid">
+            classDetails=[
+                {name:"Grade 2",time:"Sunday 3:30pm-5:30pm"},
+                {name:"Grade 3",time:"Sunday 2:00pm-4:00pm"},
+                {name:"Grade 4",time:"Sunday 3:30pm-5:30pm"},
+                {name:"Grade 5",time:"Sunday 4:00pm-6:00pm"}
+            ];
 
-                ${
-                    t.classDetails.map(
-                        (c,i)=>`
+        }
+        else if(t.name==="Priyanthi Abeysundara"){
 
-                            <button
-                                class="sanjuni-class-button"
-                                onclick="showSanjuniTime(${i})">
+            classDetails=[
+                {name:"Grade 1",time:"4:00pm-6:00pm"},
+                {name:"Grade 2",time:"4:00pm-6:00pm"}
+            ];
 
-                                <span>
-                                    ${c.name}
-                                </span>
+        }
+        else if(t.name==="Ashoka Indrani"){
 
-                                ${
-                                    c.free
-                                    ?
-                                    "<small>FREE</small>"
-                                    :
-                                    ""
-                                }
+            classDetails=[
+                {name:"Akuru Hururu",time:"3:00pm-5:00pm"}
+            ];
 
-                            </button>
+        }
+        else if(t.name==="Saduni Jeewanthi"){
 
-                        `
-                    ).join("")
+            classDetails=[
+                {name:"Akuru Hururu",time:"9:00am-11:00am"}
+            ];
+
+        }
+        else if(t.name==="Yenali Manodya"){
+
+            classDetails=[
+                {name:"Primary Dance",time:"Sunday 11:00am-1:00pm"}
+            ];
+
+        }
+        else{
+
+            classDetails=[
+                {
+                    name:t.classes||t.section,
+                    time:t.time||"Coming Soon"
                 }
+            ];
 
-            </div>
-
-        `;
-
-
-        document.getElementById(
-            "primaryTime"
-        ).innerText="";
-
-
-        window.currentSanjuniTeacher=t;
+        }
 
     }
 
-    else{
-
-        document.getElementById(
-            "primaryClasses"
-        ).innerText=t.classes;
-
-
-        document.getElementById(
-            "primaryTime"
-        ).innerText=t.time;
-
-    }
-
+    window.currentPrimaryTeacher=t;
+    window.currentPrimaryClassDetails=classDetails;
 
     document.getElementById(
-        "primaryDetails"
-    ).classList.add("active");
+        "primaryClasses"
+    ).innerHTML=`
 
+        <div class="sanjuni-class-grid">
 
-    document.getElementById(
-        "primaryDetails"
-    ).scrollIntoView({
+            ${
+                classDetails.map(
+                    (c,i)=>`
 
-        behavior:"smooth",
+                        <button
+                            class="sanjuni-class-button"
+                            onclick="showPrimaryClassTime(${i})">
 
-        block:"center"
+                            <span>
+                                ${c.name}
+                            </span>
 
-    });
+                            ${
+                                c.free
+                                ?
+                                "<small>FREE</small>"
+                                :
+                                ""
+                            }
 
-};
+                        </button>
 
+                    `
+                ).join("")
+            }
 
-/* ================================================= */
-/* SANJUNI TIME */
-/* ================================================= */
+        </div>
 
-window.showSanjuniTime=index=>{
-
-    const t=
-        window.currentSanjuniTeacher;
-
-    const c=
-        t.classDetails[index];
-
+    `;
 
     document.getElementById(
         "primaryTime"
@@ -2181,15 +2183,54 @@ window.showSanjuniTime=index=>{
         <div class="sanjuni-time-box">
 
             <div class="time-class-name">
+                SELECT A CLASS / GRADE
+            </div>
 
+            <div class="time-value" style="font-size:18px;color:#aaa">
+                Click one of the buttons above to view the class time.
+            </div>
+
+        </div>
+
+    `;
+
+    document.getElementById(
+        "primaryDetails"
+    ).classList.add("active");
+
+    document.getElementById(
+        "primaryDetails"
+    ).scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
+};
+
+
+/* ================================================= */
+/* PRIMARY CLASS TIME */
+/* ================================================= */
+
+window.showPrimaryClassTime=index=>{
+
+    const details=window.currentPrimaryClassDetails||[];
+    const c=details[index];
+
+    if(!c)return;
+
+    document.getElementById(
+        "primaryTime"
+    ).innerHTML=`
+
+        <div class="sanjuni-time-box">
+
+            <div class="time-class-name">
                 ${c.name}
-
             </div>
 
             <div class="time-value">
-
-                ${c.time}
-
+                ${c.time||"Coming Soon"}
             </div>
 
             ${
@@ -2204,6 +2245,19 @@ window.showSanjuniTime=index=>{
 
     `;
 
+    document.getElementById(
+        "primaryTime"
+    ).scrollIntoView({
+        behavior:"smooth",
+        block:"nearest"
+    });
+
+};
+
+
+/* Backward-compatible Sanjuni function */
+window.showSanjuniTime=index=>{
+    window.showPrimaryClassTime(index);
 };
 
 
