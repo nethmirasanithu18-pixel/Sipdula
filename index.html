@@ -757,6 +757,18 @@ body{
         letter-spacing:5px
     }
 }
+
+
+
+/* Manual class-time editor */
+.class-time-modal{display:none;position:fixed;inset:0;z-index:10000;align-items:center;justify-content:center;padding:18px;background:rgba(1,5,18,.86);backdrop-filter:blur(10px)}
+.class-time-card{width:min(470px,100%);padding:26px;border:1px solid #72aaff88;border-radius:20px;background:linear-gradient(145deg,#07152e,#17113a);box-shadow:0 0 45px #2563eb33;color:#fff}
+.class-time-card h2{margin:0 0 8px;text-align:center}.class-time-card p{color:#bdcbe8;line-height:1.5}
+.class-time-card label{display:block;margin:13px 0 6px;color:#cfe4ff;font-size:13px}
+.class-time-card input,.class-time-card select{width:100%;box-sizing:border-box;padding:12px;border:1px solid #536da4;border-radius:10px;background:#050b1c;color:#fff;font-size:15px}
+.class-time-actions{display:flex;gap:10px;margin-top:16px}.class-time-actions button{flex:1;padding:12px;border:1px solid #668bff;border-radius:10px;background:#173d77;color:#fff;font-weight:700;cursor:pointer}
+#classTimeEditMessage{min-height:22px;font-size:13px}
+
 </style>
 </head>
 
@@ -808,6 +820,8 @@ body{
         <h1 class="sipdula">
             SIPDULA
         </h1>
+
+
 
         <p class="hero-quote">
             Education is the best investment in the world.
@@ -933,6 +947,11 @@ body{
     <p class="description">
         CHOOSE YOUR GRADE TO FIND YOUR SUBJECTS AND TEACHERS
     </p>
+
+    <div style="text-align:center;margin:18px auto 26px;">
+        <button type="button" onclick="editSipdulaClassTime()" style="padding:12px 22px;border:1px solid #8ab8ff;border-radius:12px;background:linear-gradient(135deg,#173d77,#552e91);color:#fff;font-weight:700;letter-spacing:1px;cursor:pointer;box-shadow:0 0 18px #3264aa55;">⚙ EDIT CLASS TIMES</button>
+        <p style="font-size:12px;opacity:.75;margin-top:8px;">Owner password required to change a class time</p>
+    </div>
 
 
     <div class="grade-grid">
@@ -2017,6 +2036,61 @@ const teachers={
 };
 
 
+/* ================================================= */
+/* PASSWORD-PROTECTED MANUAL CLASS TIME EDITOR */
+/* ================================================= */
+const SIPDULA_TIME_EDIT_PASSWORD = "sanithu20111125";
+const SIPDULA_TIME_STORAGE_KEY = "sipdulaManualClassTimesV1";
+
+function loadSipdulaManualTimes(){
+    let saved={};
+    try { saved=JSON.parse(localStorage.getItem(SIPDULA_TIME_STORAGE_KEY)||"{}"); }
+    catch(e) { saved={}; }
+    Object.keys(saved).forEach(key=>{
+        const splitAt=key.lastIndexOf("|");
+        const subject=key.slice(0,splitAt), grade=Number(key.slice(splitAt+1));
+        const item=(teachers[subject]||[]).find(t=>Number(t.grade)===grade);
+        if(item && typeof saved[key]==="string") item.time=saved[key];
+    });
+}
+loadSipdulaManualTimes();
+
+window.editSipdulaClassTime=function(){
+    const modal=document.getElementById("classTimeEditModal");
+    if(!modal){alert("Class-time editor did not load. Please refresh the page.");return;}
+    document.getElementById("classTimePassword").value="";
+    document.getElementById("classTimeEditMessage").textContent="";
+    document.getElementById("classTimeEditMessage").style.color="";
+    modal.style.display="flex";
+};
+window.closeClassTimeEditor=function(){
+    const modal=document.getElementById("classTimeEditModal");
+    if(modal) modal.style.display="none";
+};
+window.saveSipdulaClassTime=function(){
+    const password=document.getElementById("classTimePassword").value;
+    const subject=document.getElementById("classTimeSubject").value;
+    const grade=Number(document.getElementById("classTimeGrade").value);
+    const newTime=document.getElementById("classTimeNewTime").value.trim();
+    const msg=document.getElementById("classTimeEditMessage");
+    if(password!==SIPDULA_TIME_EDIT_PASSWORD){msg.style.color="#ffb4b4";msg.textContent="Incorrect password. Class time was not changed.";return;}
+    if(!newTime){msg.style.color="#ffb4b4";msg.textContent="Please enter the new class time.";return;}
+    const item=(teachers[subject]||[]).find(t=>Number(t.grade)===grade);
+    if(!item){msg.style.color="#ffb4b4";msg.textContent="No timetable entry found for this subject and grade.";return;}
+    const key=subject+"|"+grade;
+    let saved={};
+    try{saved=JSON.parse(localStorage.getItem(SIPDULA_TIME_STORAGE_KEY)||"{}");}catch(e){saved={};}
+    saved[key]=newTime;
+    try{localStorage.setItem(SIPDULA_TIME_STORAGE_KEY,JSON.stringify(saved));}
+    catch(e){msg.style.color="#ffb4b4";msg.textContent="Could not save. Check browser storage settings.";return;}
+    item.time=newTime;
+    if(typeof currentGrade!=="undefined" && currentGrade===grade){
+        const details=document.getElementById("teacherDetails");
+        if(details && details.classList.contains("active")) document.getElementById("detailTime").innerText=newTime;
+    }
+    msg.style.color="#9fe8c3";
+    msg.textContent="Saved: "+subject+" — Grade "+grade+" — "+newTime+". This browser only.";
+};
 /* ================================================= */
 /* PRIMARY TEACHER CARDS */
 /* ================================================= */
@@ -3332,6 +3406,28 @@ onAuthStateChanged(
 })();
 
 </script>
+
+
+
+<!-- PASSWORD-PROTECTED CLASS TIME EDITOR -->
+<div class="class-time-modal" id="classTimeEditModal" role="dialog" aria-modal="true" aria-labelledby="classTimeEditTitle">
+  <div class="class-time-card">
+    <h2 id="classTimeEditTitle">EDIT CLASS TIMES</h2>
+    <p>Enter the owner password, select a subject and grade, then enter the new time.</p>
+    <label for="classTimePassword">Owner password</label>
+    <input id="classTimePassword" type="password" autocomplete="off" placeholder="Enter password">
+    <label for="classTimeSubject">Subject</label>
+    <select id="classTimeSubject">
+      <option value="Science">Science</option><option value="Mathematics">Mathematics</option><option value="English">English</option><option value="Sinhala">Sinhala</option><option value="Tamil">Tamil</option>
+    </select>
+    <label for="classTimeGrade">Grade</label>
+    <select id="classTimeGrade"><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option></select>
+    <label for="classTimeNewTime">New class time</label>
+    <input id="classTimeNewTime" type="text" placeholder="e.g. Friday 3:00pm-5:00pm or Coming Soon">
+    <p id="classTimeEditMessage" aria-live="polite"></p>
+    <div class="class-time-actions"><button type="button" onclick="saveSipdulaClassTime()">SAVE TIME</button><button type="button" onclick="closeClassTimeEditor()">CANCEL</button></div>
+  </div>
+</div>
 
 </body>
 </html>
