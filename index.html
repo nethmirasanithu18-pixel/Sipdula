@@ -858,9 +858,14 @@ body{
         <p style="font-size:12px;opacity:.75;margin-top:8px;">Owner password required to change a primary class time</p>
     </div>
 
-    <div
-        class="teacher-grid"
-        id="primaryGrid">
+    <div class="teacher-grid" id="primaryGrid">
+        <!-- Static fallback cards keep teacher names visible even if the Firebase module is unavailable. -->
+        <button type="button" class="teacher-button" onclick="window.showPrimaryDetails && window.showPrimaryDetails({section:'Primary English',name:'Jeewa Kottage',classes:'Grade 2, Grade 3, Grade 4, Grade 5',time:'',icon:'📖'})"><div class="teacher-icon">📖</div><h3>Jeewa Kottage</h3><p>Primary English</p></button>
+        <button type="button" class="teacher-button" onclick="window.showPrimaryDetails && window.showPrimaryDetails({section:'Grade 1, 2',name:'Priyanthi Abeysundara',classes:'Grade 1, Grade 2',time:'4:00pm-6:00pm',icon:'🎓'})"><div class="teacher-icon">🎓</div><h3>Priyanthi Abeysundara</h3><p>Grade 1, 2</p></button>
+        <button type="button" class="teacher-button" onclick="window.showPrimaryDetails && window.showPrimaryDetails({section:'Grade 3, 4, 5 Scholarship',name:'Sanjuni Sankalpana',classes:'Grade 3, Grade 3 (Paper Class), Grade 4, Grade 4 (Paper Class), Grade 5, Grade 5 (Paper Class), Grade 5 (Maths)',time:'',icon:'🏆',classDetails:[{name:'Grade 3',time:'Saturday 12:15pm-2:15pm'},{name:'Grade 3 (Paper Class)',time:'Sunday 2:00pm-4:00pm',free:true},{name:'Grade 4',time:'Saturday 8:15am-10:15am'},{name:'Grade 4 (Paper Class)',time:'Sunday 2:00pm-4:00pm',free:true},{name:'Grade 5',time:'Sunday 2:00pm-4:30pm'},{name:'Grade 5 (Paper Class)',time:'Saturday 8:15am-10:15am',free:true},{name:'Grade 5 (Maths)',time:'Saturday 10:15am-12:15pm'}]})"><div class="teacher-icon">🏆</div><h3>Sanjuni Sankalpana</h3><p>Grade 3, 4, 5 Scholarship</p></button>
+        <button type="button" class="teacher-button" onclick="window.showPrimaryDetails && window.showPrimaryDetails({section:'Akuru Hururu',name:'Ashoka Indrani',classes:'Akuru Hururu',time:'3:00pm-5:00pm',icon:'🔤'})"><div class="teacher-icon">🔤</div><h3>Ashoka Indrani</h3><p>Akuru Hururu</p></button>
+        <button type="button" class="teacher-button" onclick="window.showPrimaryDetails && window.showPrimaryDetails({section:'Akuru Hururu',name:'Saduni Jeewanthi',classes:'Akuru Hururu',time:'9:00am-11:00am',icon:'🔤'})"><div class="teacher-icon">🔤</div><h3>Saduni Jeewanthi</h3><p>Akuru Hururu</p></button>
+        <button type="button" class="teacher-button" onclick="window.showPrimaryDetails && window.showPrimaryDetails({section:'Dancing',name:'Yenali Manodya',classes:'Primary Dance',time:'Sunday 11:00am-1:00pm',icon:'💃'})"><div class="teacher-icon">💃</div><h3>Yenali Manodya</h3><p>Dancing</p></button>
     </div>
 
 
@@ -2175,7 +2180,7 @@ const primaryGrid=
 document.getElementById("primaryGrid");
 
 
-primaryTeachers.forEach(t=>{
+if(primaryGrid && primaryGrid.children.length===0) primaryTeachers.forEach(t=>{
 
     const b=
     document.createElement("div");
