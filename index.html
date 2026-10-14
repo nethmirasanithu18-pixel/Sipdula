@@ -1765,6 +1765,9 @@ const primaryTeachers=[
 ];
 
 
+/* Expose primary teacher data to the page editor controls. */
+window.SIPDULA_PRIMARY_TEACHERS = primaryTeachers;
+
 /* ================================================= */
 /* SECONDARY TEACHERS */
 /* ================================================= */
@@ -2140,6 +2143,8 @@ function populateSipdulaPrimaryClasses(){
     });
     loadSipdulaPrimarySelectedTime();
 }
+window.populateSipdulaPrimaryClasses = populateSipdulaPrimaryClasses;
+window.loadSipdulaPrimarySelectedTime = loadSipdulaPrimarySelectedTime;
 window.editSipdulaPrimaryClassTime=function(){
     const modal=document.getElementById("primaryTimeEditModal");
     if(!modal){alert("Primary class-time editor did not load. Please refresh the page.");return;}
@@ -3532,13 +3537,22 @@ onAuthStateChanged(
   </div>
 </div>
 <script>
-(function initPrimaryTimeEditor(){
+document.addEventListener("DOMContentLoaded", function initPrimaryTimeEditor(){
   const select=document.getElementById("primaryTimeTeacher");
-  if(!select || !Array.isArray(primaryTeachers)) return;
+  const list=window.SIPDULA_PRIMARY_TEACHERS;
+  if(!select || !Array.isArray(list)) {
+    console.error("SIPDULA primary teacher list did not initialize.");
+    return;
+  }
   select.innerHTML="";
-  primaryTeachers.forEach(t=>{const option=document.createElement("option");option.value=t.name;option.textContent=t.name;select.appendChild(option);});
-  populateSipdulaPrimaryClasses();
-})();
+  list.forEach(t=>{
+    const option=document.createElement("option");
+    option.value=t.name;
+    option.textContent=t.name;
+    select.appendChild(option);
+  });
+  if(typeof window.populateSipdulaPrimaryClasses === "function") window.populateSipdulaPrimaryClasses();
+});
 </script>
 
 </body>
