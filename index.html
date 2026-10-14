@@ -853,6 +853,11 @@ body{
         PRIMARY EDUCATION • TEACHERS AND CLASSES
     </p>
 
+    <div style="text-align:center;margin:18px auto 26px;">
+        <button type="button" onclick="editSipdulaPrimaryClassTime()" style="padding:12px 22px;border:1px solid #8ab8ff;border-radius:12px;background:linear-gradient(135deg,#173d77,#552e91);color:#fff;font-weight:700;letter-spacing:1px;cursor:pointer;box-shadow:0 0 18px #3264aa55;">⚙ EDIT PRIMARY CLASS TIMES</button>
+        <p style="font-size:12px;opacity:.75;margin-top:8px;">Owner password required to change a primary class time</p>
+    </div>
+
     <div
         class="teacher-grid"
         id="primaryGrid">
@@ -2092,6 +2097,77 @@ window.saveSipdulaClassTime=function(){
     msg.textContent="Saved: "+subject+" — Grade "+grade+" — "+newTime+". This browser only.";
 };
 /* ================================================= */
+/* PRIMARY CLASS TIME EDITOR HELPERS */
+/* Uses the same owner password and browser storage. */
+/* ================================================= */
+const SIPDULA_PRIMARY_TIME_STORAGE_KEY = "sipdulaManualPrimaryClassTimesV1";
+function getSipdulaPrimaryClassDetails(t){
+    if(t.classDetails) return t.classDetails.map(c=>({...c}));
+    if(t.name==="Jeewa Kottage") return [
+        {name:"Grade 2",time:"Sunday 3:30pm-5:30pm"},
+        {name:"Grade 3",time:"Sunday 2:00pm-4:00pm"},
+        {name:"Grade 4",time:"Sunday 3:30pm-5:30pm"},
+        {name:"Grade 5",time:"Sunday 4:00pm-6:00pm"}
+    ];
+    if(t.name==="Priyanthi Abeysundara") return [{name:"Grade 1",time:"4:00pm-6:00pm"},{name:"Grade 2",time:"4:00pm-6:00pm"}];
+    if(t.name==="Ashoka Indrani") return [{name:"Akuru Hururu",time:"3:00pm-5:00pm"}];
+    if(t.name==="Saduni Jeewanthi") return [{name:"Akuru Hururu",time:"9:00am-11:00am"}];
+    if(t.name==="Yenali Manodya") return [{name:"Primary Dance",time:"Sunday 11:00am-1:00pm"}];
+    return [{name:t.classes||t.section,time:t.time||"Coming Soon"}];
+}
+function loadSipdulaPrimarySelectedTime(){
+    const teacherSelect=document.getElementById("primaryTimeTeacher");
+    const classSelect=document.getElementById("primaryTimeClass");
+    const timeInput=document.getElementById("primaryTimeNewTime");
+    if(!teacherSelect||!classSelect||!timeInput)return;
+    const key=teacherSelect.value+"|"+classSelect.value; let saved={};
+    try{saved=JSON.parse(localStorage.getItem(SIPDULA_PRIMARY_TIME_STORAGE_KEY)||"{}");}catch(e){}
+    timeInput.value=saved[key]||"";
+}
+function populateSipdulaPrimaryClasses(){
+    const teacherSelect=document.getElementById("primaryTimeTeacher");
+    const classSelect=document.getElementById("primaryTimeClass");
+    if(!teacherSelect||!classSelect) return;
+    const teacher=primaryTeachers.find(t=>t.name===teacherSelect.value)||primaryTeachers[0];
+    classSelect.innerHTML="";
+    getSipdulaPrimaryClassDetails(teacher).forEach(c=>{
+        const option=document.createElement("option"); option.value=c.name; option.textContent=c.name; classSelect.appendChild(option);
+    });
+    loadSipdulaPrimarySelectedTime();
+}
+window.editSipdulaPrimaryClassTime=function(){
+    const modal=document.getElementById("primaryTimeEditModal");
+    if(!modal){alert("Primary class-time editor did not load. Please refresh the page.");return;}
+    document.getElementById("primaryTimePassword").value="";
+    document.getElementById("primaryTimeEditMessage").textContent="";
+    document.getElementById("primaryTimeTeacher").value=primaryTeachers[0].name;
+    populateSipdulaPrimaryClasses();
+    modal.style.display="flex";
+};
+window.closePrimaryTimeEditor=function(){const modal=document.getElementById("primaryTimeEditModal");if(modal)modal.style.display="none";};
+window.saveSipdulaPrimaryClassTime=function(){
+    const password=document.getElementById("primaryTimePassword").value;
+    const teacher=document.getElementById("primaryTimeTeacher").value;
+    const className=document.getElementById("primaryTimeClass").value;
+    const newTime=document.getElementById("primaryTimeNewTime").value.trim();
+    const msg=document.getElementById("primaryTimeEditMessage");
+    if(password!==SIPDULA_TIME_EDIT_PASSWORD){msg.style.color="#ffb4b4";msg.textContent="Incorrect password. Class time was not changed.";return;}
+    if(!newTime){msg.style.color="#ffb4b4";msg.textContent="Please enter the new class time.";return;}
+    const key=teacher+"|"+className; let saved={};
+    try{saved=JSON.parse(localStorage.getItem(SIPDULA_PRIMARY_TIME_STORAGE_KEY)||"{}");}catch(e){saved={};}
+    saved[key]=newTime;
+    try{localStorage.setItem(SIPDULA_PRIMARY_TIME_STORAGE_KEY,JSON.stringify(saved));}
+    catch(e){msg.style.color="#ffb4b4";msg.textContent="Could not save. Check browser storage settings.";return;}
+    const activeTeacher=window.currentPrimaryTeacher;
+    const activeDetails=window.currentPrimaryClassDetails||[];
+    if(activeTeacher&&activeTeacher.name===teacher){
+        const item=activeDetails.find(c=>c.name===className); if(item)item.time=newTime;
+        const selected=activeDetails.findIndex(c=>c.name===className); if(selected>=0&&document.getElementById("primaryDetails").classList.contains("active"))window.showPrimaryClassTime(selected);
+    }
+    msg.style.color="#9fe8c3";msg.textContent="Saved: "+teacher+" — "+className+" — "+newTime+". This browser only.";
+};
+
+/* ================================================= */
 /* PRIMARY TEACHER CARDS */
 /* ================================================= */
 
@@ -2210,6 +2286,10 @@ window.showPrimaryDetails=t=>{
         }
 
     }
+
+    let savedPrimaryTimes={};
+    try{savedPrimaryTimes=JSON.parse(localStorage.getItem(SIPDULA_PRIMARY_TIME_STORAGE_KEY)||"{}");}catch(e){savedPrimaryTimes={};}
+    classDetails=classDetails.map(c=>({...c,time:savedPrimaryTimes[t.name+"|"+c.name]||c.time}));
 
     window.currentPrimaryTeacher=t;
     window.currentPrimaryClassDetails=classDetails;
@@ -3428,6 +3508,33 @@ onAuthStateChanged(
     <div class="class-time-actions"><button type="button" onclick="saveSipdulaClassTime()">SAVE TIME</button><button type="button" onclick="closeClassTimeEditor()">CANCEL</button></div>
   </div>
 </div>
+
+<!-- PASSWORD-PROTECTED PRIMARY CLASS TIME EDITOR -->
+<div class="class-time-modal" id="primaryTimeEditModal" role="dialog" aria-modal="true" aria-labelledby="primaryTimeEditTitle">
+  <div class="class-time-card">
+    <h2 id="primaryTimeEditTitle">EDIT PRIMARY CLASS TIMES</h2>
+    <p>Enter the same owner password, choose a primary teacher and class, then enter the new time.</p>
+    <label for="primaryTimePassword">Owner password</label>
+    <input id="primaryTimePassword" type="password" autocomplete="off" placeholder="Enter password">
+    <label for="primaryTimeTeacher">Primary teacher</label>
+    <select id="primaryTimeTeacher" onchange="populateSipdulaPrimaryClasses()"></select>
+    <label for="primaryTimeClass">Class / Grade</label>
+    <select id="primaryTimeClass" onchange="loadSipdulaPrimarySelectedTime()"></select>
+    <label for="primaryTimeNewTime">New class time</label>
+    <input id="primaryTimeNewTime" type="text" placeholder="e.g. Sunday 3:00pm-5:00pm or Coming Soon">
+    <p id="primaryTimeEditMessage" aria-live="polite"></p>
+    <div class="class-time-actions"><button type="button" onclick="saveSipdulaPrimaryClassTime()">SAVE TIME</button><button type="button" onclick="closePrimaryTimeEditor()">CANCEL</button></div>
+  </div>
+</div>
+<script>
+(function initPrimaryTimeEditor(){
+  const select=document.getElementById("primaryTimeTeacher");
+  if(!select || !Array.isArray(primaryTeachers)) return;
+  select.innerHTML="";
+  primaryTeachers.forEach(t=>{const option=document.createElement("option");option.value=t.name;option.textContent=t.name;select.appendChild(option);});
+  populateSipdulaPrimaryClasses();
+})();
+</script>
 
 </body>
 </html>
