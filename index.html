@@ -1274,81 +1274,20 @@ body{
 
 
         <div class="admin-panel">
-
-            <button
-                class="admin-btn"
-                onclick="openLogin()">
-
-                ADMIN / STAFF LOGIN
-
+            <button class="admin-btn" type="button" onclick="openNoticeEditor()">
+                ＋ ADD A NOTICE
             </button>
 
-
-            <div
-                id="adminArea"
-                class="admin-area"
-                style="display:none">
-
+            <div id="noticeEditorArea" class="admin-area" style="display:none">
                 <div class="notice-form">
-
-                    <input
-                        id="noticeTitle"
-                        placeholder="Notice title">
-
-                    <textarea
-                        id="noticeText"
-                        placeholder="Notice details">
-                    </textarea>
-
-                    <button
-                        class="admin-btn"
-                        onclick="addNotice()">
-
-                        ADD NOTICE
-
-                    </button>
-
+                    <input id="noticePassword" type="password" autocomplete="off" placeholder="Enter owner password">
+                    <input id="noticeTitle" type="text" placeholder="Notice title">
+                    <textarea id="noticeText" placeholder="Write notice details"></textarea>
+                    <p id="noticeEditMessage" aria-live="polite" style="margin:8px 0;color:#8ab8ff"></p>
+                    <button class="admin-btn" type="button" onclick="addNotice()">SAVE NOTICE</button>
+                    <button class="admin-btn" type="button" onclick="closeNoticeEditor()" style="margin-left:8px">CANCEL</button>
                 </div>
-
-
-                <div
-                    id="authorizedArea"
-                    class="authorized-area"
-                    style="display:none">
-
-                    <h3>
-                        AUTHORIZED EMAILS
-                    </h3>
-
-                    <input
-                        id="authEmail"
-                        type="email"
-                        placeholder="Authorized email">
-
-                    <button
-                        class="admin-btn"
-                        onclick="addAuthorizedEmail()">
-
-                        ADD AUTHORIZED EMAIL
-
-                    </button>
-
-                    <div id="authorizedList">
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="close"
-                    onclick="logoutAdmin()">
-
-                    LOG OUT
-
-                </button>
-
             </div>
-
         </div>
 
     </div>
@@ -2644,87 +2583,46 @@ function escapeHtml(s){
 }
 
 
-const noticeList=
-document.getElementById(
-    "noticeList"
-);
+const noticeList=document.getElementById("noticeList");
+const SIPDULA_NOTICE_PASSWORD="sanithu20111125";
+const SIPDULA_LOCAL_NOTICES_KEY="sipdulaPasswordNoticesV1";
+let sipdulaCloudNotices=[];
 
+function getLocalSipdulaNotices(){
+  try { return JSON.parse(localStorage.getItem(SIPDULA_LOCAL_NOTICES_KEY)||"[]"); }
+  catch(e){ return []; }
+}
 
-const noticesQuery=
-query(
-    collection(db,"notices"),
-    orderBy("createdAt","desc")
-);
+function renderSipdulaNotices(){
+  const all=[...getLocalSipdulaNotices(), ...sipdulaCloudNotices];
+  all.sort((a,b)=>(b.createdAtMs||0)-(a.createdAtMs||0));
+  if(!all.length){ noticeList.innerHTML='<p class="notice-empty">No notices yet.</p>'; return; }
+  noticeList.innerHTML=all.map(n=>{
+    const date=n.createdAtMs ? new Date(n.createdAtMs).toLocaleString() : (n.createdAt?.toDate ? n.createdAt.toDate().toLocaleString() : "Just now");
+    return `<div class="notice-item"><div class="notice-date">${escapeHtml(date)}</div><h3>${escapeHtml(n.title||"Notice")}</h3><p>${escapeHtml(n.text||"").replace(/\n/g,"<br>")}</p></div>`;
+  }).join("");
+}
 
+const noticesQuery=query(collection(db,"notices"),orderBy("createdAt","desc"));
+onSnapshot(noticesQuery, snap=>{
+  sipdulaCloudNotices=[];
+  snap.forEach(d=>{ const n=d.data(); sipdulaCloudNotices.push({...n,createdAtMs:n.createdAt?.toDate ? n.createdAt.toDate().getTime() : 0}); });
+  renderSipdulaNotices();
+}, err=>{
+  console.error("Cloud notices could not be loaded:",err);
+  renderSipdulaNotices();
+});
 
-onSnapshot(
-    noticesQuery,
-
-    snap=>{
-
-        if(snap.empty){
-
-            noticeList.innerHTML=
-                '<p class="notice-empty">No notices yet.</p>';
-
-            return;
-
-        }
-
-
-        noticeList.innerHTML="";
-
-
-        snap.forEach(d=>{
-
-            const n=d.data();
-
-
-            const date=
-                n.createdAt?.toDate
-                ?
-                n.createdAt
-                    .toDate()
-                    .toLocaleString()
-                :
-                "Just now";
-
-
-            noticeList.innerHTML+=`
-
-                <div class="notice-item">
-
-                    <div class="notice-date">
-                        ${date}
-                    </div>
-
-                    <h3>
-                        ${escapeHtml(n.title||"Notice")}
-                    </h3>
-
-                    <p>
-                        ${escapeHtml(n.text||"")}
-                    </p>
-
-                </div>
-
-            `;
-
-        });
-
-    },
-
-    err=>{
-
-        console.error(err);
-
-        noticeList.innerHTML=
-            '<p class="notice-empty">Notice system could not be loaded.</p>';
-
-    }
-
-);
-
+window.openNoticeEditor=()=>{
+  const area=document.getElementById("noticeEditorArea");
+  area.style.display="block";
+  document.getElementById("noticeEditMessage").textContent="Enter the owner password to add a notice.";
+  area.scrollIntoView({behavior:"smooth",block:"center"});
+};
+window.closeNoticeEditor=()=>{
+  document.getElementById("noticeEditorArea").style.display="none";
+  document.getElementById("noticeEditMessage").textContent="";
+};
 
 /* ================================================= */
 /* LOGIN */
@@ -2804,72 +2702,23 @@ window.logoutAdmin=()=>{
 /* ADD NOTICE */
 /* ================================================= */
 
-window.addNotice=async()=>{
-
-    const title=
-        document.getElementById(
-            "noticeTitle"
-        ).value.trim();
-
-
-    const text=
-        document.getElementById(
-            "noticeText"
-        ).value.trim();
-
-
-    if(!title||!text){
-
-        alert(
-            "Please enter both title and details."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        await addDoc(
-            collection(db,"notices"),
-            {
-
-                title,
-
-                text,
-
-                createdAt:
-                    serverTimestamp(),
-
-                createdBy:
-                    auth.currentUser?.email||""
-
-            }
-        );
-
-
-        document.getElementById(
-            "noticeTitle"
-        ).value="";
-
-
-        document.getElementById(
-            "noticeText"
-        ).value="";
-
-    }
-
-    catch(e){
-
-        alert(
-            "You are not authorized to add notices."
-        );
-
-    }
-
+window.addNotice=()=>{
+  const password=document.getElementById("noticePassword").value;
+  const title=document.getElementById("noticeTitle").value.trim();
+  const textValue=document.getElementById("noticeText").value.trim();
+  const message=document.getElementById("noticeEditMessage");
+  if(password!==SIPDULA_NOTICE_PASSWORD){ message.textContent="Incorrect password. Please try again."; return; }
+  if(!title||!textValue){ message.textContent="Please enter both a notice title and details."; return; }
+  const notices=getLocalSipdulaNotices();
+  notices.push({title,text:textValue,createdAtMs:Date.now(),createdBy:"owner"});
+  try { localStorage.setItem(SIPDULA_LOCAL_NOTICES_KEY,JSON.stringify(notices)); }
+  catch(e){ message.textContent="Could not save this notice in this browser."; return; }
+  document.getElementById("noticeTitle").value="";
+  document.getElementById("noticeText").value="";
+  document.getElementById("noticePassword").value="";
+  renderSipdulaNotices();
+  message.textContent="Notice added successfully in this browser.";
 };
-
 
 /* ================================================= */
 /* AUTHORIZED EMAILS */
@@ -3028,66 +2877,8 @@ async function loadAuthorizedEmails(){
 /* AUTH STATE */
 /* ================================================= */
 
-onAuthStateChanged(
-    auth,
-    user=>{
-
-        const area=
-            document.getElementById(
-                "adminArea"
-            );
-
-
-        const authorized=
-            document.getElementById(
-                "authorizedArea"
-            );
-
-
-        if(user){
-
-            area.style.display=
-                "block";
-
-
-            const isMainAdmin=
-                (
-                    user.email||""
-                ).toLowerCase()
-                ===
-                ADMIN_EMAIL.toLowerCase();
-
-
-            authorized.style.display=
-                isMainAdmin
-                ?
-                "block"
-                :
-                "none";
-
-
-            if(isMainAdmin){
-
-                loadAuthorizedEmails();
-
-            }
-
-        }
-
-        else{
-
-            area.style.display=
-                "none";
-
-
-            authorized.style.display=
-                "none";
-
-        }
-
-    }
-
-);
+// Notice posting now uses the simple password form; no sign-in panel is required.
+onAuthStateChanged(auth, ()=>{});
 
 </script>
 
